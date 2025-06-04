@@ -4,8 +4,8 @@ import routes from "../routes/routesName";
 import { IoMdMenu, IoMdClose } from "react-icons/io";
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
-  const [open, setOpen] = useState(false); // default menu hidden
+  const [user] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleMenu = () => setOpen(!open);
   const handleClose = () => setOpen(false);
@@ -35,7 +35,10 @@ const Navbar = () => {
               className="uppercase text-center border-b border-gray-300"
               onClick={handleClose}
             >
-              <NavLink to={route.path} className="block py-4 hover:text-red-300">
+              <NavLink
+                to={route.path}
+                className="block py-4 hover:text-red-300"
+              >
                 {route.name}
               </NavLink>
             </li>
@@ -45,16 +48,20 @@ const Navbar = () => {
           {user ? (
             <>
               <Link to="/signin" onClick={handleClose}>
-                <button className="btn btn-neutral uppercase">Sign In</button>
+                <button className="btn btn-neutral uppercase w-full">Login</button>
               </Link>
               <Link to="/logout" onClick={handleClose}>
-                <button className="btn btn-neutral uppercase">Logout</button>
+                <button className="btn btn-neutral uppercase w-full">Register</button>
               </Link>
             </>
           ) : (
-            <Link to="/login" onClick={handleClose}  className="w-full">
-              <button className="btn btn-neutral uppercase w-full">Login</button>
-            </Link>
+            <>
+              <Link to="/login" onClick={handleClose} className="w-full">
+                <button className="btn btn-neutral uppercase w-full">
+                  Logout
+                </button>
+              </Link>
+            </>
           )}
         </div>
       </div>
@@ -64,26 +71,45 @@ const Navbar = () => {
         <ul className="flex gap-4 text-white">
           {routes.map((route, id) => (
             <li key={id} className="uppercase">
-              <NavLink to={route.path} className="hover:text-red-300">
+              <NavLink
+                to={route.path}
+                className="hover:text-red-300 text-[1rem] font-[500]"
+              >
                 {route.name}
               </NavLink>
             </li>
           ))}
         </ul>
-        <div className="ml-4 flex gap-2">
+        <div className="ml-4 flex gap-[3rem] justify-center items-center">
           {user ? (
             <>
-              <Link to="/signin">
-                <button className="btn btn-neutral uppercase">Sign In</button>
-              </Link>
-              <Link to="/logout">
-                <button className="btn btn-neutral uppercase">Logout</button>
+              <div className="w-[50px] h-[50px]">
+                <img
+                  className="w-full h-full rounded-full"
+                  src="
+              https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+                  alt=""
+                />
+              </div>
+              <Link to="/login">
+                <button className="btn btn-neutral uppercase border-red-300 px-[2rem]">
+                  Logout
+                </button>
               </Link>
             </>
           ) : (
-            <Link to="/login">
-              <button className="btn btn-neutral uppercase border-red-300 px-[3rem]">Login</button>
-            </Link>
+            <>
+              <Link to="/signin">
+                <button className="btn btn-neutral uppercase border-red-300 px-[2rem]">
+                  Login
+                </button>
+              </Link>
+              <Link to="/logout">
+                <button className="btn btn-neutral uppercase border-red-300 px-[2rem]">
+                  Register
+                </button>
+              </Link>
+            </>
           )}
         </div>
       </div>
