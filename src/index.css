@@ -13,6 +13,11 @@
   }
 }
 
+@layer components {
+  .socilaIcons {
+    @apply cursor-pointer bg-red-200 rounded-full p-[0.41rem] hover:bg-transparent hover:shadow hover:border-red-200 hover:border-2  
+  }
+}
 @theme {
   --font-Poppins: "Poppins", sans-serif;
   --font-Lato: "Lato", sans-serif;

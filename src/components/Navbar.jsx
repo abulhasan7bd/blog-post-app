@@ -11,7 +11,8 @@ const Navbar = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <nav className="px-[2%] h-[80px] mx-auto text-white bg-[#343538] flex justify-between items-center relative">
+<nav className="w-full px-[2%] h-[80px] fixed top-0    text-white bg-[#343538] flex justify-between items-center z-10">
+
       {/* Logo */}
       <Link className="text-2xl font-Lato font-bold" to="/">
         PenFlow
@@ -48,10 +49,14 @@ const Navbar = () => {
           {user ? (
             <>
               <Link to="/signin" onClick={handleClose}>
-                <button className="btn btn-neutral uppercase w-full">Login</button>
+                <button className="btn btn-neutral uppercase w-full">
+                  Login
+                </button>
               </Link>
               <Link to="/logout" onClick={handleClose}>
-                <button className="btn btn-neutral uppercase w-full">Register</button>
+                <button className="btn btn-neutral uppercase w-full">
+                  Register
+                </button>
               </Link>
             </>
           ) : (
