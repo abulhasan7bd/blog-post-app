@@ -7,7 +7,7 @@ import CommunitySpotlight from "../components/extraSection/CommunitySpotlight";
 
 const Home = () => {
   return (
-    <div className="mt-[80px]">
+    <div>
       <Header />
       <Blogs />
       <NewsLetter />

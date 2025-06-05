@@ -1,6 +1,6 @@
 import React from "react";
 import BlogCard from "../pages/BlogCard";
-const Blogs = () => {
+const Blogs = ( ) => {
   const dummyBlog = {
     id: Date.now().toString() + Math.random().toString(36).substring(2),
 
@@ -15,7 +15,7 @@ const Blogs = () => {
   return (
     <div className="mt-[3rem] mx-[2%]">
       <h2 className="font-Poppins text-[2rem] md:text-[2.3rem] lg:text-[2.5rem] font-[600]">
-        Latest from Our Blog
+Thsi is ikdikd
       </h2>
       <div className="grid lg:grid-cols-2 gap-[3rem]">
         <BlogCard dummyBlog={dummyBlog} />

@@ -9,7 +9,7 @@ const MainLayout = () => {
       <div>
         <Navbar />
       </div>
-      <div>
+      <div className="mt-[80px]">
         <Outlet />
       </div>
       <div>

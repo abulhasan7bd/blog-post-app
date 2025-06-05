@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import AuthProvider from "./context/AuthProvider";
 import MainLayout from "./layouts/MainLayout";
 import Details from "./pages/Details";
+ import AllBlogs from "./components/allblog/AllBlogs";
 
 const router = createBrowserRouter([
   {
@@ -13,9 +14,7 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <Home /> },
-      { path: "/about", index: true, element: <h3>About</h3> },
-      { path: "/", index: true, element: <Home /> },
-      { path: "/", index: true, element: <Home /> },
+      { path: "/all-blogs",   element: <AllBlogs /> },
       { path: "/details/:id", element: <Details /> },
     ],
   },
