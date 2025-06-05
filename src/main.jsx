@@ -5,16 +5,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import AuthProvider from "./context/AuthProvider";
 import MainLayout from "./layouts/MainLayout";
+import Details from "./pages/Details";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
-      {  index: true, element: <Home /> },
+      { index: true, element: <Home /> },
       { path: "/about", index: true, element: <h3>About</h3> },
       { path: "/", index: true, element: <Home /> },
       { path: "/", index: true, element: <Home /> },
+      { path: "/details/:id", element: <Details /> },
     ],
   },
 ]);

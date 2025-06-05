@@ -18,7 +18,7 @@ const SliderH = () => {
 
   {/* Text content (top on small, right on large) */}
   <div className="w-full md:w-[50%] flex flex-col justify-center items-start h-full text-center md:text-left">
-    <h2 className="text-[2.5rem] md:text-[4rem] text-white font-Poppins font-[800]">
+    <h2 className="text-[2.5rem] md:text-[4rem] text-white font-Poppins font-[800] text-center md:text-left md:mx-0 mx-auto">
       The Dev Journal
     </h2>
     <p className="text-white font-Poppins text-[1rem] mt-2">
@@ -26,7 +26,7 @@ const SliderH = () => {
       Dive into hands-on tutorials, insightful guides, and real-world developer discussions
       to sharpen your skills and stay ahead in the ever-evolving tech landscape.
     </p>
-    <b className="text-white text-[1.2rem] md:text-[1.3rem] mt-4 font-[600] font-Lato">
+    <b className="text-white text-center mx-auto text-[1.2rem] md:text-[1.3rem] mt-4 font-[600] font-Lato md:mx-0">
       Daily Blog Posts of
       <span className="ml-2" style={{ color: "#FF9494" }}>
         <Typewriter
