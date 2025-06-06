@@ -7,6 +7,7 @@ import AuthProvider from "./context/AuthProvider";
 import MainLayout from "./layouts/MainLayout";
 import Details from "./pages/Details";
  import AllBlogs from "./components/allblog/AllBlogs";
+import AddBlogs from "./pages/AddBlogs";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: "/all-blogs",   element: <AllBlogs /> },
       { path: "/details/:id", element: <Details /> },
       { path: "/blog/update/:id", element: <Details /> },
+      { path: "/add-blog", element: <AddBlogs /> },
     ],
   },
 ]);
