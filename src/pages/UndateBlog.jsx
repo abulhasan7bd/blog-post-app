@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddBlogs = () => {
+const UndateBlog = () => {
   const categories = [
     "Health",
     "Science",
@@ -19,37 +19,17 @@ const AddBlogs = () => {
     blog.userEmail = "abulHasan@gmail.com";
     blog.userPhoto = "htttps//:imgage/tob/very-importent/20000k333";
 
-    // Date validation and formatting
-    const now = new Date();
-    const day = now.getDate();
-    const year = now.getFullYear();
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const month = monthNames[now.getMonth()];
-    const formattedDate = `${month} ${day}, ${year}`;
-    blog.time = formattedDate
+
 
     // Show Result
-    console.log(blog);
+    console.log("updatedData",blog);
   };
 
   return (
-    <div className="max-w-5xl mx-auto my-[100px] p-6 bg-base-200 border border-base-300 rounded-lg shadow-md  ">
+    <div className="max-w-5xl mx-auto mt-[100px] p-6 bg-base-200 border border-base-300 rounded-lg shadow-md  ">
       <form onSubmit={handleSubmit} className="space-y-6">
         <h2 className="text-3xl font-semibold mb-6 text-center">
-          Create A New Blog
+          You Can Updated Thsi Blog
         </h2>
 
         {/* Grid container: 1 col on mobile, 2 cols on md+ */}
@@ -128,7 +108,7 @@ const AddBlogs = () => {
             <input
               type="text"
               className="input input-bordered w-full"
-              placeholder="Long description"
+              placeholder="Logn description"
               name="tittleL"
             />
           </div>
@@ -139,7 +119,7 @@ const AddBlogs = () => {
               Long Description
             </label>
             <textarea
-              className="textarea textarea-bordered w-full resize-none"
+              className="textarea textarea-bordered w-full"
               placeholder="Long description"
               required
               name="longDescription"
@@ -163,11 +143,11 @@ const AddBlogs = () => {
         </div>
         {/* Submit Button full width */}
         <button type="submit" className="btn btn-neutral w-full text-lg">
-          Submit Blog
+          Update now
         </button>
       </form>
     </div>
   );
 };
 
-export default AddBlogs;
+export default UndateBlog;
