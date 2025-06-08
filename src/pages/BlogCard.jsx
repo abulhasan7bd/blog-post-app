@@ -1,6 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { use } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 const BlogCard = ({ blog }) => {
+  const { user } = use(AuthContext);
+  const navigate = useNavigate();
+  const handleWishList = (wishListItem) => {
+    console.log(wishListItem)
+    const wishListEmail = user.email;
+    wishListItem.wishListEmail = wishListEmail;
+ 
+ 
+    fetch("http://localhost:5000/wishlist", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(wishListItem),
+    })
+      .then((res) => {
+        console.log(res);
+        navigate("/wishlist");
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
   return (
     <div className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins ">
       <div className="flex flex-col md:flex-row gap-6">
@@ -34,7 +58,10 @@ const BlogCard = ({ blog }) => {
             <Link to={`/details/${blog._id}`} state={{ blog }}>
               <button className="btn  capitalize bg-red-300">details </button>
             </Link>
-            <button className="btn  capitalize bg-red-300 border-none outline-none">
+            <button
+              onClick={() => handleWishList(blog)}
+              className="btn  capitalize bg-red-300 border-none outline-none"
+            >
               wishlist
             </button>
           </div>

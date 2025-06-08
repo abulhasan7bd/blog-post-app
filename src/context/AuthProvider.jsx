@@ -63,11 +63,11 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const suscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setLoading(false);
+        setLoading(false)
         setUser(user);
         console.log(user);
       } else {
-        setLoading(true);
+        setLoading(true)
         console.log("Sing out");
       }
     });

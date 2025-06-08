@@ -6,6 +6,7 @@ const Details = () => {
   const navigate = useNavigate();
   const data = useLocation();
   const blog = data.state.blog;
+  console.log(blog)
   const [userEmail] = useState(blog.userEmail);
   const [blogEmail] = useState(blog.userEmail);
 

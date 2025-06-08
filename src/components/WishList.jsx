@@ -1,30 +1,68 @@
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import WishListPage from "../pages/WishListPage";
+import { AuthContext } from "../context/AuthContext";
 
 const WishList = () => {
-  const dummyBlog = {
-    id: Date.now().toString() + Math.random().toString(36).substring(2),
+  const { user } = use(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    if (!user?.email) return;
 
-    image:
-      "https://img.freepik.com/premium-photo/full-length-young-man-with-ball-grass_1048944-25301156.jpg?uid=R90026751&ga=GA1.1.1322734213.1735572178&semt=ais_items_boosted&w=740",
-    title: "Women in Triathlon Unite During the COVID-19",
-    date: "June 11, 2021",
-    author: "Chris Foster",
-    description:
-      "A strong thread of motivation connects the women’s triathlon community around the world. The World Triathlon and the ITU Women’s Committee introduces these...",
+    fetch(
+      `http://localhost:5000/all-wishlist?email=${encodeURIComponent(
+        user.email
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setLoading(false);
+        setData(res);
+      })
+      .catch((err) => {
+        console.log("Fetch error:", err.message);
+      });
+  }, [user,loading]);
+
+  const getId = (id) => {
+    fetch(`http://localhost:5000/wish-list-remove/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setLoading(true)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
   return (
     <div className="mt-[3rem] mx-[2%]">
       <h2 className="font-Poppins text-[2rem] md:text-[2.3rem] lg:text-[2.5rem] font-[600]">
-        Your Wish List Item
+        Your Wish List Item ({data.length})
       </h2>
       <div className="grid lg:grid-cols-2 gap-[3rem]">
-        <WishListPage dummyBlog={dummyBlog} />
-        <WishListPage dummyBlog={dummyBlog} /> 
-        <WishListPage dummyBlog={dummyBlog} /> 
-        <WishListPage dummyBlog={dummyBlog} /> 
-        <WishListPage dummyBlog={dummyBlog} /> 
-        <WishListPage dummyBlog={dummyBlog} />
+        {loading ? (
+          <h3>Loadin data .....</h3>
+        ) : (
+          data.map((item, id) => {
+            return (
+              <WishListPage
+                blog={item}
+                key={id}
+                getId={getId}
+              />
+            );
+          })
+        )}
       </div>
     </div>
   );

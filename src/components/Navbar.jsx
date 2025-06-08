@@ -6,7 +6,6 @@ import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const { user, signOutAccout, setUser } = use(AuthContext);
-console.log(user && user.photoURL)
   const logOut = () => {
     signOutAccout()
       .then(() => {

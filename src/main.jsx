@@ -30,10 +30,18 @@ const router = createBrowserRouter([
         },
         element: <Home />,
       },
-      { path: "/all-blogs", element: <AllBlogs /> },
+      {
+        path: "/all-blogs",
+        loader: () => {
+          return fetch("http://localhost:5000/all-blogs").then((res) =>
+            res.json()
+          );
+        },
+        element: <AllBlogs />,
+      },
       { path: "/details/:id", element: <Details /> },
       { path: "/blog/update/:id", element: <Details /> },
-     {path:"*",element:<NotFound/>},
+      { path: "*", element: <NotFound /> },
       {
         path: "/add-blog",
         element: (
@@ -44,6 +52,7 @@ const router = createBrowserRouter([
       },
       { path: "/update-blog/:id", element: <UndateBlog /> },
       { path: "/featured-blogs", element: <FeatureBlogs /> },
+
       {
         path: "/wishlist",
         element: (
