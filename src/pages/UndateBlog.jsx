@@ -1,6 +1,9 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 const UndateBlog = () => {
+  const data = useLocation();
+  const oldData = data.state;
   const categories = [
     "Health",
     "Science",
@@ -19,10 +22,8 @@ const UndateBlog = () => {
     blog.userEmail = "abulHasan@gmail.com";
     blog.userPhoto = "htttps//:imgage/tob/very-importent/20000k333";
 
-
-
     // Show Result
-    console.log("updatedData",blog);
+    console.log("updatedData", blog);
   };
 
   return (
@@ -42,6 +43,7 @@ const UndateBlog = () => {
               name="heading"
               className="input input-bordered w-full"
               placeholder="Blog title"
+              defaultValue={oldData.heading}
               required
             />
           </div>
@@ -54,6 +56,7 @@ const UndateBlog = () => {
               name="imgUrl"
               className="input input-bordered w-full"
               placeholder="Image URL"
+              defaultValue={oldData.imgUrl}
               required
             />
           </div>
@@ -65,6 +68,7 @@ const UndateBlog = () => {
               className="select select-bordered w-full"
               required
               name="category"
+              defaultValue={oldData.category}
             >
               <option value="" disabled>
                 Select category
@@ -79,37 +83,40 @@ const UndateBlog = () => {
 
           {/* title  */}
           <div>
-            <label className="label font-medium text-lg">Tittle</label>
+            <label className="label font-medium text-lg">Tittle (Short)</label>
             <input
               type="text"
               className="input input-bordered w-full"
               placeholder="Short description"
               name="tittleS"
               required
+              defaultValue={oldData.titleS}
             />
           </div>
           {/* Short Description */}
           <div>
             <label className="label font-medium text-lg">
-              Short Description
+              {oldData.titleS}
             </label>
-            <input
+            <textarea
               type="text"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full resize-none h-[100px] text-wrap text-justify "
               placeholder="Short description"
               name="shortDescription"
+              defaultValue={oldData.shortDescription}
               required
             />
           </div>
           <div>
             <label className="label font-medium text-lg">
-              Tittle (optional)
+              Tittle (Long)
             </label>
             <input
               type="text"
               className="input input-bordered w-full"
               placeholder="Logn description"
               name="tittleL"
+              defaultValue={oldData.titleL}
             />
           </div>
 
@@ -119,10 +126,11 @@ const UndateBlog = () => {
               Long Description
             </label>
             <textarea
-              className="textarea textarea-bordered w-full"
+              className="textarea textarea-bordered w-full h-[120px] resize-none"
               placeholder="Long description"
               required
               name="longDescription"
+              defaultValue={oldData.longDescription}
             ></textarea>
           </div>
         </div>
@@ -138,6 +146,7 @@ const UndateBlog = () => {
             name="red"
             min="1"
             max="10"
+            defaultValue={oldData.red}
             required
           />
         </div>

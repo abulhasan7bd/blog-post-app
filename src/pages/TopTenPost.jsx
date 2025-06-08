@@ -1,16 +1,18 @@
 import React from "react";
 
 const TopTenPost = ({ posts }) => {
-
-
+  // word length count
   const wordLength = (description) => {
     let wordSlice = description.split(" ").length;
     return wordSlice;
   };
 
+  //   longDescription sorted
   const topPost = [...posts];
   const shortData = topPost
-    .sort((a, b) => wordLength(b.longDescription) - wordLength(a.longDescription))
+    .sort(
+      (a, b) => wordLength(b.longDescription) - wordLength(a.longDescription)
+    )
     .slice(0, 10);
 
   return (
@@ -31,7 +33,7 @@ const TopTenPost = ({ posts }) => {
           </thead>
           <tbody>
             {shortData.map((post, index) => (
-              <tr key={post.id || index} className="hover:bg-gray-50">
+              <tr key={post._id || index} className="hover:bg-gray-50">
                 <td className="px-4 py-2 border-b">{index + 1}</td>
                 <td className="px-4 py-2 border-b">{post.name}</td>
                 <td className="px-4 py-2 border-b">{post.email}</td>

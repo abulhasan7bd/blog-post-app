@@ -4,9 +4,11 @@ import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
   const { user } = use(AuthContext);
+console.log("user for private route",user)
   if (!user) {
-    return <Navigate to="/signup" />;
+    return <Navigate to="/register" />;
   }
+
   return children;
 };
 

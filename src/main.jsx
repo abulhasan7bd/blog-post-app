@@ -10,19 +10,50 @@ import AllBlogs from "./components/allblog/AllBlogs";
 import AddBlogs from "./pages/AddBlogs";
 import UndateBlog from "./pages/UndateBlog";
 import FeatureBlogs from "./components/FeatureBlogs";
+import WishList from "./components/WishList";
+import Login from "./components/auth/Login";
+import Signin from "./components/auth/Signin";
+import PrivateRoute from "./components/PrivateRoute";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
-      { index: true, element: <Home /> },
+      {
+        index: true,
+        loader: () => {
+          return fetch("http://localhost:5000/all-blogs").then((res) =>
+            res.json()
+          );
+        },
+        element: <Home />,
+      },
       { path: "/all-blogs", element: <AllBlogs /> },
       { path: "/details/:id", element: <Details /> },
       { path: "/blog/update/:id", element: <Details /> },
-      { path: "/add-blog", element: <AddBlogs /> },
+     {path:"*",element:<NotFound/>},
+      {
+        path: "/add-blog",
+        element: (
+          <PrivateRoute>
+            <AddBlogs />
+          </PrivateRoute>
+        ),
+      },
       { path: "/update-blog/:id", element: <UndateBlog /> },
       { path: "/featured-blogs", element: <FeatureBlogs /> },
+      {
+        path: "/wishlist",
+        element: (
+          <PrivateRoute>
+            <WishList />
+          </PrivateRoute>
+        ),
+      },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Signin /> },
     ],
   },
 ]);

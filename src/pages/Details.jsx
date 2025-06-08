@@ -1,11 +1,14 @@
 import { MessageCircleOff } from "lucide-react";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Details = () => {
   const navigate = useNavigate();
-  const [emailf] = useState("abulhasan@gmail.com");
-  const [emailb] = useState("abulhasan@gmail.com");
+  const data = useLocation();
+  const blog = data.state.blog;
+  const [userEmail] = useState(blog.userEmail);
+  const [blogEmail] = useState(blog.userEmail);
+
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([
     {
@@ -34,8 +37,8 @@ const Details = () => {
     }
   };
 
-  const handleUpdate = () => {
-    navigate(`/update-blog/333}`); // dynamic route with blog ID
+  const handleUpdate = (blog) => {
+    navigate(`/update-blog/${blog._id}`,{state:blog});
   };
 
   return (
@@ -43,18 +46,18 @@ const Details = () => {
       {/* profile description  */}
       <div className="max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-3xl md:text-5xl font-bold leading-tight">
-          How Viruses Shape Health, Science, and Survival.
+          {blog.heading}
         </h1>
 
         <div className="mt-6 text-gray-600 text-sm grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
           {/* Left column: author info */}
           <div className="flex items-center space-x-3">
             <img
-              src="https://img.freepik.com/premium-photo/casual-young-man-shirt_146377-2992.jpg?uid=R90026751&ga=GA1.1.1322734213.1735572178&semt=ais_items_boosted&w=740"
+              src={blog.userPhoto}
               alt="Author"
               className="w-8 h-8 rounded-full"
             />
-            <span className="font-medium text-black">Adarsh Gupta</span>
+            <span className="font-medium text-black">{blog.userName}</span>
             <button className="px-3 py-0.5 border border-gray-300 rounded-full hover:bg-red-300 transition text-sm">
               Follow
             </button>
@@ -62,9 +65,9 @@ const Details = () => {
 
           {/* Right column: read time and date */}
           <div className="flex items-center justify-start md:justify-end space-x-2">
-            <span>4 min read</span>
+            <span>{blog.red} min read</span>
             <span>•</span>
-            <span>Apr 21, 2025</span>
+            <span>{blog.time}</span>
           </div>
         </div>
 
@@ -73,7 +76,7 @@ const Details = () => {
           <div className="max-w-4xl mx-auto">
             <img
               className="w-full mx-auto h-[23rem] object-cover rounded-md"
-              src="https://img.freepik.com/free-vector/essential-vitamin-mineral-complex_23-2148487926.jpg?uid=R90026751&ga=GA1.1.1322734213.1735572178&semt=ais_items_boosted&w=740"
+              src={blog.imgUrl}
               alt=""
             />
           </div>
@@ -81,35 +84,20 @@ const Details = () => {
         {/* title box 1 */}
         <div className="mt-4   ">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight">
-            I Want to Live Here Like a Beautiful Virus Addiction
+            {blog.titleL}
           </h2>
           <p className="mt-2 md:mt-3 text-justify text-base md:text-lg lg:text-xl leading-relaxed">
-            Viruses are much more than just agents of disease. They have shaped
-            human history, survival, and the very science we depend on today.
-            While some viruses like influenza, HIV, or coronavirus have caused
-            widespread illness, others have become tools for innovation in
-            medicine and genetics. Through the study of viruses, scientists have
-            developed life-saving vaccines, antiviral treatments, and even
-            advanced gene therapy techniques that fight cancer and genetic
-            disorders. Viruses also play a surprising role in evolution by
-            transferring genetic material between species. In the modern world,
-            understanding viruses is key not only for health and survival, but
-            for unlocking future scientific breakthroughs.
+            {blog.longDescription}
           </p>
         </div>
 
         {/* title box 2 */}
         <div className="mt-6 ">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight">
-            What We Should Do: A True Test of Awareness in Crisis
+            {blog.titleS}
           </h2>
           <p className="mt-2 md:mt-3 text-justify text-base md:text-lg lg:text-xl leading-relaxed">
-            In these challenging times, we face constant crises, diseases, and
-            rapid changes in technology. What role should we play as
-            individuals, families, and society? Awareness, empathy, and
-            responsible behavior are more important now than ever before. This
-            article discusses what we should do in the current reality and why
-            it matters for a better future.
+            {blog.shortDescription}
           </p>
         </div>
       </div>
@@ -147,8 +135,11 @@ const Details = () => {
         <div className="flex items-center space-x-4">
           <div>
             {/* Conditional Update Button */}
-            {emailf === emailb ? (
-              <button onClick={handleUpdate} className="btn btn-warning mt-4">
+            {userEmail === blogEmail ? (
+              <button
+                onClick={() => handleUpdate(blog)}
+                className="btn btn-warning mt-4"
+              >
                 Update Blog
               </button>
             ) : (
@@ -191,7 +182,7 @@ const Details = () => {
             <p className="text-sm font-semibold mb-1">আলোচনা অতিথি</p>
           </div>
 
-          {emailb === emailf ? (
+          {userEmail === blogEmail ? (
             <p
               style={{ color: "red" }}
               className="mt-1.5 w-full p-2 flex items-center justify-center rounded bg-gray-100 focus:outline-none h-[100px] resize-none focus:ring-2 focus:ring-blue-500"

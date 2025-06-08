@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import routes from "../routes/routesName";
 import { IoMdMenu, IoMdClose } from "react-icons/io";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  const [user] = useState(true);
+  const { user, signOutAccout, setUser } = use(AuthContext);
+console.log(user && user.photoURL)
+  const logOut = () => {
+    signOutAccout()
+      .then(() => {
+        console.log("sign out");
+        setUser(null);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   const [open, setOpen] = useState(false);
 
   const handleMenu = () => setOpen(!open);
   const handleClose = () => setOpen(false);
 
   return (
-<nav className="w-full px-[2%] h-[80px] fixed top-0    text-white bg-[#343538] flex justify-between items-center z-10">
-
+    <nav className="w-full px-[2%] h-[80px] fixed top-0    text-white bg-[#343538] flex justify-between items-center z-10">
       {/* Logo */}
       <Link className="text-2xl font-Lato font-bold" to="/">
         PenFlow
@@ -48,12 +59,12 @@ const Navbar = () => {
         <div className="p-4 flex flex-col gap-3 ">
           {user ? (
             <>
-              <Link to="/signin" onClick={handleClose}>
+              <Link to="/login" onClick={handleClose}>
                 <button className="btn btn-neutral uppercase w-full">
                   Login
                 </button>
               </Link>
-              <Link to="/logout" onClick={handleClose}>
+              <Link to="/register" onClick={handleClose}>
                 <button className="btn btn-neutral uppercase w-full">
                   Register
                 </button>
@@ -61,7 +72,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/login" onClick={handleClose} className="w-full">
+              <Link    onClick={handleClose} className="w-full">
                 <button className="btn btn-neutral uppercase w-full">
                   Logout
                 </button>
@@ -85,31 +96,36 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+
+
+
+        {/* desktop  */}
         <div className="ml-4 flex gap-[3rem] justify-center items-center">
           {user ? (
             <>
               <div className="w-[50px] h-[50px]">
                 <img
-                  className="w-full h-full rounded-full"
-                  src="
-              https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
-                  alt=""
+                  className="w-full h-full rounded-full object-cover"
+                  src={user && user.photoURL}
+                  alt="User Avatar"
                 />
               </div>
-              <Link to="/login">
-                <button className="btn btn-neutral uppercase border-red-300 px-[2rem]">
-                  Logout
-                </button>
-              </Link>
+
+              <button
+                onClick={logOut}
+                className="btn btn-neutral uppercase border-red-300 px-[2rem]"
+              >
+                Logout
+              </button>
             </>
           ) : (
             <>
-              <Link to="/signin">
+              <Link to="/login">
                 <button className="btn btn-neutral uppercase border-red-300 px-[2rem]">
                   Login
                 </button>
               </Link>
-              <Link to="/logout">
+              <Link to="/register">
                 <button className="btn btn-neutral uppercase border-red-300 px-[2rem]">
                   Register
                 </button>

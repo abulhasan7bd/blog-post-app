@@ -77,8 +77,12 @@ const AllBlogs = () => {
           Search
         </button>
       </div>
-      <div className="flex flex-col md:flex-row items-center gap-4 p-4 text-black shadow rounded-xl">
-        <div className="grid lg:grid-cols-2 gap-[3rem]">
+       
+      <div className="flex flex-col items-center gap-4 p-4 text-black shadow rounded-xl">
+    <h2 className="font-Poppins text-[2rem] md:text-[2.3rem] lg:text-[2.5rem] font-[600] text-left pl-[1rem] w-full">
+   Showcase of all project : {dummyBlog.length}
+</h2>
+        <div className="grid lg:grid-cols-2 gap-[3rem]  ">
           {dummyBlog
             .filter((item) => {
               return searchText === ""

@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-const Blog = ({blog}) => {
- 
+const WishListPage = ({ dummyBlog }) => {
+  const blog = dummyBlog;
   return (
-    <div className="mt-[1rem] mx-[2%]">
-     
+    <div>
       <div className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins ">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Image Section */}
@@ -39,7 +37,7 @@ const Blog = ({blog}) => {
                 <button className="btn  capitalize bg-red-300">details </button>
               </Link>
               <button className="btn  capitalize bg-red-300 border-none outline-none">
-                wishlist
+                Remove
               </button>
             </div>
           </div>
@@ -49,4 +47,4 @@ const Blog = ({blog}) => {
   );
 };
 
-export default Blog;
+export default WishListPage;
