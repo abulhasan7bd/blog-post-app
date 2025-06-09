@@ -1,9 +1,10 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UndateBlog = () => {
   const data = useLocation();
   const oldData = data.state;
+  const navigate = useNavigate()
   const categories = [
     "Health",
     "Science",
@@ -14,16 +15,33 @@ const UndateBlog = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
     const blog = Object.fromEntries(formData.entries());
 
-    // Add some User Information
-    blog.uerName = "Abul Hasan";
+    // ✅ Corrected User Information
+    blog.userName = "Abul Hasan";
     blog.userEmail = "abulHasan@gmail.com";
-    blog.userPhoto = "htttps//:imgage/tob/very-importent/20000k333";
+    blog.userPhoto = "https://example.com/images/abul-hasan.jpg"; // valid image URL
 
-    // Show Result
-    console.log("updatedData", blog);
+    // ✅ Send PUT request to update blog
+    fetch(`http://localhost:5000/update/${oldData._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(blog),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if(data.acknowledged){
+       navigate(-1, { state: { updated: true } });
+        }
+        console.log("Update success:", data);
+      })
+      .catch((err) => {
+        console.error("Update error:", err);
+      });
   };
 
   return (
@@ -108,9 +126,7 @@ const UndateBlog = () => {
             />
           </div>
           <div>
-            <label className="label font-medium text-lg">
-              Tittle (Long)
-            </label>
+            <label className="label font-medium text-lg">Tittle (Long)</label>
             <input
               type="text"
               className="input input-bordered w-full"

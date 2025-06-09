@@ -1,6 +1,8 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const AddBlogs = () => {
+  const { user } = use(AuthContext);
   const categories = [
     "Health",
     "Science",
@@ -15,9 +17,9 @@ const AddBlogs = () => {
     const blog = Object.fromEntries(formData.entries());
 
     // Add some User Information
-    blog.uerName = "Abul Hasan";
-    blog.userEmail = "abulHasan@gmail.com";
-    blog.userPhoto = "htttps//:imgage/tob/very-importent/20000k333";
+    blog.userName = user?.user?.displayName || "Anonymous";
+    blog.userEmail = user?.user?.email || "unknown@example.com";
+    blog.userPhoto = user?.user?.photoURL || "https://i.ibb.co/placeholder.png";
 
     // Date validation and formatting
     const now = new Date();
@@ -39,10 +41,22 @@ const AddBlogs = () => {
     ];
     const month = monthNames[now.getMonth()];
     const formattedDate = `${month} ${day}, ${year}`;
-    blog.time = formattedDate
+    blog.time = formattedDate;
 
-    // Show Result
-    console.log(blog);
+    // CREATE BLOG
+    fetch("http://localhost:5000/add-blog", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(blog),
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -73,7 +87,7 @@ const AddBlogs = () => {
               type="text"
               name="imgUrl"
               className="input input-bordered w-full"
-              placeholder="Image URL"
+              placeholder="Image URL Thumnail"
               required
             />
           </div>

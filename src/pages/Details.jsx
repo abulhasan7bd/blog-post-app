@@ -1,15 +1,20 @@
-import { MessageCircleOff } from "lucide-react";
-import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Loader, MessageCircleOff } from "lucide-react";
+import React, { use, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Details = () => {
+  // ======
   const navigate = useNavigate();
-  const data = useLocation();
-  const blog = data.state.blog;
-  console.log(blog)
-  const [userEmail] = useState(blog.userEmail);
-  const [blogEmail] = useState(blog.userEmail);
+  const { user, loading } = use(AuthContext);
+  const blogDetails = useLoaderData();
+  console.log(blogDetails);
 
+  // USER INFORMATION
+  const loginUserEmail = user?.email;
+  const blogDetailsEmail = blogDetails?.userEmail;
+
+  // COMMENT STATE DEFINE 
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([
     {
@@ -38,27 +43,33 @@ const Details = () => {
     }
   };
 
-  const handleUpdate = (blog) => {
-    navigate(`/update-blog/${blog._id}`,{state:blog});
+  const handleUpdate = (blogDetails) => {
+    navigate(`/update-blog/${blogDetails._id}`, { state: blogDetails });
   };
+
+  if (loading) {
+    return <h3>Loading........</h3>;
+  }
 
   return (
     <div className="font-Poppins">
       {/* profile description  */}
       <div className="max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-3xl md:text-5xl font-bold leading-tight">
-          {blog.heading}
+          {blogDetails.heading}
         </h1>
 
         <div className="mt-6 text-gray-600 text-sm grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
           {/* Left column: author info */}
           <div className="flex items-center space-x-3">
             <img
-              src={blog.userPhoto}
+              src={blogDetails.userPhoto}
               alt="Author"
               className="w-8 h-8 rounded-full"
             />
-            <span className="font-medium text-black">{blog.userName}</span>
+            <span className="font-medium text-black">
+              {blogDetails.userName}
+            </span>
             <button className="px-3 py-0.5 border border-gray-300 rounded-full hover:bg-red-300 transition text-sm">
               Follow
             </button>
@@ -66,18 +77,18 @@ const Details = () => {
 
           {/* Right column: read time and date */}
           <div className="flex items-center justify-start md:justify-end space-x-2">
-            <span>{blog.red} min read</span>
+            <span>{blogDetails.red} min read</span>
             <span>•</span>
-            <span>{blog.time}</span>
+            <span>{blogDetails.time}</span>
           </div>
         </div>
 
-        {/* blog cover photo */}
+        {/* blogDetails cover photo */}
         <div className="mt-[1.3rem]">
           <div className="max-w-4xl mx-auto">
             <img
               className="w-full mx-auto h-[23rem] object-cover rounded-md"
-              src={blog.imgUrl}
+              src={blogDetails.imgUrl}
               alt=""
             />
           </div>
@@ -85,20 +96,20 @@ const Details = () => {
         {/* title box 1 */}
         <div className="mt-4   ">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight">
-            {blog.titleL}
+            {blogDetails.titleL}
           </h2>
           <p className="mt-2 md:mt-3 text-justify text-base md:text-lg lg:text-xl leading-relaxed">
-            {blog.longDescription}
+            {blogDetails.longDescription}
           </p>
         </div>
 
         {/* title box 2 */}
         <div className="mt-6 ">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight">
-            {blog.titleS}
+            {blogDetails.titleS}
           </h2>
           <p className="mt-2 md:mt-3 text-justify text-base md:text-lg lg:text-xl leading-relaxed">
-            {blog.shortDescription}
+            {blogDetails.shortDescription}
           </p>
         </div>
       </div>
@@ -136,12 +147,12 @@ const Details = () => {
         <div className="flex items-center space-x-4">
           <div>
             {/* Conditional Update Button */}
-            {userEmail === blogEmail ? (
+            {loginUserEmail === blogDetailsEmail ? (
               <button
-                onClick={() => handleUpdate(blog)}
+                onClick={() => handleUpdate(blogDetails)}
                 className="btn btn-warning mt-4"
               >
-                Update Blog
+                Update blogDetails
               </button>
             ) : (
               <button className="hover:text-black">
@@ -183,12 +194,12 @@ const Details = () => {
             <p className="text-sm font-semibold mb-1">আলোচনা অতিথি</p>
           </div>
 
-          {userEmail === blogEmail ? (
+          {loginUserEmail === blogDetailsEmail ? (
             <p
               style={{ color: "red" }}
               className="mt-1.5 w-full p-2 flex items-center justify-center rounded bg-gray-100 focus:outline-none h-[100px] resize-none focus:ring-2 focus:ring-blue-500"
             >
-              Can not comment on own blog
+              Can not comment on own blogDetails
             </p>
           ) : (
             <div className="flex flex-col  gap-2 mt-2 w-full">
