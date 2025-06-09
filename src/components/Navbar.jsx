@@ -25,8 +25,7 @@ const Navbar = () => {
     <nav className="w-full px-[2%] h-[80px] fixed top-0    text-white bg-[#343538] flex justify-between items-center z-10">
       {/* Logo */}
       <Link className="text-2xl font-Lato font-bold" to="/">
-        PenFlow
-      </Link>
+DevHeps      </Link>
 
       {/* Mobile Menu Button */}
       <button onClick={handleMenu} className="sm:hidden z-30">

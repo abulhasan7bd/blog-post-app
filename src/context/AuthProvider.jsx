@@ -67,7 +67,7 @@ const AuthProvider = ({ children }) => {
         setUser(user);
         console.log(user);
       } else {
-        setLoading(true)
+        setLoading(false)
         console.log("Sing out");
       }
     });
