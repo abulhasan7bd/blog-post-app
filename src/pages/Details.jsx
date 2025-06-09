@@ -1,5 +1,5 @@
 import { Loader, MessageCircleOff } from "lucide-react";
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
@@ -7,45 +7,74 @@ const Details = () => {
   // ======
   const navigate = useNavigate();
   const { user, loading } = use(AuthContext);
-  const blogDetails = useLoaderData();
-  console.log(blogDetails);
+  const blogDetails = useLoaderData(); 
+  const [commentLoading,setCommentLoading]=useState(true)
+  
+  // COMMENT BOX 
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
+ 
 
   // USER INFORMATION
   const loginUserEmail = user?.email;
   const blogDetailsEmail = blogDetails?.userEmail;
 
-  // COMMENT STATE DEFINE 
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([
-    {
-      name: "রিফাত হোসেন",
-      avatar: "https://i.pravatar.cc/150?img=3",
-      comment: "দারুণ পোস্ট! অনেক কিছু শিখলাম। ধন্যবাদ।",
-    },
-    {
-      name: "তামান্না আফরোজ",
-      avatar: "https://i.pravatar.cc/150?img=5",
-      comment: "আপনার লেখার ধরন খুব ভালো লাগে। অপেক্ষায় থাকবো পরের লেখার জন্য।",
-    },
-    {
-      name: "জুবায়ের ইসলাম",
-      avatar: "https://i.pravatar.cc/150?img=8",
-      comment: "খুব সুন্দরভাবে ব্যাখ্যা করেছেন। এইভাবে চালিয়ে যান!",
-    },
-  ]);
 
-  const handlePost = () => {
-    if (comment.trim()) {
-      setComments([comment, ...comments]);
-      setComment("");
-    } else {
-      alert("Comment cannot be empty!");
-    }
+
+
+  const handlePost = (e) => {
+    e.preventDefault()
+    // COMMENTOR INFO
+    const commentorName = user?.displayName;
+    const commentorProfile = user?.photoURL;
+    const commentorText = comment;
+
+    setCommentLoading(false)
+    // LATEST COMMENT
+    const currentComment = {
+      commentorName: commentorName,
+      commentorProfile: commentorProfile,
+      commentorText: commentorText,
+      commentPostId: blogDetails._id,
+    };
+
+    fetch("http://localhost:5000/comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(currentComment),
+    })
+      .then((res) => {
+      setCommentLoading(true)
+        console.log(res);
+      })
+      .catch((err) => {
+        setCommentLoading(false)
+        console.log(err);
+      });
   };
 
+  console.log(commentLoading)
   const handleUpdate = (blogDetails) => {
     navigate(`/update-blog/${blogDetails._id}`, { state: blogDetails });
   };
+
+
+useEffect(() => {
+  fetch(`http://localhost:5000/commenFind/${blogDetails._id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      setCommentLoading(false);
+      setComments(data);
+    })
+    .catch((err) => {
+      console.log(err.message);
+      setCommentLoading(true);
+    });
+}, [commentLoading]);
+
 
   if (loading) {
     return <h3>Loading........</h3>;
@@ -187,11 +216,11 @@ const Details = () => {
         <div className="flex items-start flex-col space-x-3">
           <div className="flex gap-[1rem] items-center">
             <img
-              src="https://i.pravatar.cc/40"
+              src={user?.photoURL}
               alt="User Avatar"
               className="w-10 h-10 rounded-full"
             />
-            <p className="text-sm font-semibold mb-1">আলোচনা অতিথি</p>
+            <p className="text-sm font-semibold mb-1">{user?.displayName}</p>
           </div>
 
           {loginUserEmail === blogDetailsEmail ? (
@@ -203,19 +232,21 @@ const Details = () => {
             </p>
           ) : (
             <div className="flex flex-col  gap-2 mt-2 w-full">
-              <textarea
+             <form onSubmit={handlePost}>
+               <textarea
                 type="text"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="What are your thoughts?"
-                className="w-full p-2 rounded bg-gray-100 focus:outline-none h-[100px] resize-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 rounded bg-gray-100 focus:outline-none h-[100px] resize-none focus:ring-2 focus:ring-blue-500"required
               />
               <button
                 className="bg-blue-600 text-white   py-1 rounded hover:bg-blue-700 w-fit px-[2rem] ml-auto cursor-pointer"
-                onClick={handlePost}
+                
               >
                 Post
               </button>
+             </form>
             </div>
           )}
         </div>
@@ -230,13 +261,14 @@ const Details = () => {
               className="bg-gray-100 p-3 rounded shadow-sm flex items-start space-x-3"
             >
               <img
-                src={c.avatar}
+                src={c.commentorProfile}
                 alt={c.name}
                 className="w-10 h-10 rounded-full object-cover"
               />
               <div>
-                <p className="font-semibold text-sm">{c.name}</p>
-                <p className="text-gray-800 text-sm">{c.comment}</p>
+                <p className="font-semibold text-sm">{c.commentorName
+}</p>
+                <p className="text-gray-800 text-sm">{c.commentorText}</p>
               </div>
             </div>
           ))}
