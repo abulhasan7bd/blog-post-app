@@ -53,7 +53,7 @@ DaisyUI — A Tailwind CSS plugin that provides pre-built, customizable UI compo
 [GitHub Repo](https://github.com/Programming-Hero-Web-Course4/b11a11-client-side-abulhasan7bd.git) <!-- Replace with actual repo -->
 
 ## 📸 Screenshots
-<img src="./../11-client/public/screenshots/banner.png" width="600" alt="Home Page Screenshot" />
+<img src="./public/screenshots/image.png" width="600" alt="Home Page Screenshot" />
 
 ---
 
