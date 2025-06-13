@@ -21,39 +21,50 @@ It helped improve my production skills and introduced me to real-world performan
 
 ## 🚀 Features
 
-- 📰 Blog post listing and details view  
-- 🔍 Clean and searchable UI  
-- 📱 100% Responsive across all devices  
-- 🎨 Smooth animations and transitions  
-- 💬 Interactive typewriter text  
-- 📤 Form with validation (TanStack Form)  
-- 🔁 SPA routing with React Router  
+- 📰 Blog post listing and details view
+- 🔍 Clean and searchable UI
+- 📱 100% Responsive across all devices
+- 🎨 Smooth animations and transitions
+- 💬 Interactive typewriter text
+- 📤 Form with validation (TanStack Form)
+- 🔁 SPA routing with React Router
 - ⚛️ Built completely in React
 
 ## 🦞 Component Library
+
 DaisyUI — A Tailwind CSS plugin that provides pre-built, customizable UI components for rapid development.
 
 ## 📦 Tech Stack
 
-- React  
-- Tailwind CSS  
-- React Router DOM  
-- Typewriter Effect  
-- TanStack Form  
+- React
+- Tailwind CSS
+- React Router DOM
+- Typewriter Effect
+- TanStack Form
 - Framer Motion / Scroll Animations
-- React loading skeleton
+
+React Loading Skeleton ⚙️:
+I used the react-loading-skeleton package in the WishList section.
+When the data is loading, a skeleton loader is shown to improve the user experience.
+If there's an error while fetching data, an appropriate error message is displayed instead.
+
+Benefits:
+Improves UX by showing a visual loading state
+Prevents layout shift during data fetching
+Easy to implement and customize
 - React Photo View
 
 ## 🔗 Live Site
 
-[Live Preview](https://example.devheps.com) <!-- Replace with actual link -->
+[Live Preview](https://auth-practice-eaa42.web.app)
 
 ## 📂 Repository
 
-[GitHub Repo](https://github.com/Programming-Hero-Web-Course4/b11a11-client-side-abulhasan7bd.git) <!-- Replace with actual repo -->
+[GitHub Repo](https://github.com/Programming-Hero-Web-Course4/b11a11-client-side-abulhasan7bd.git) 
 
 ## 📸 Screenshots
-<img src="./public/screenshots/image.png" width="600" alt="Home Page Screenshot" />
+
+<img src="./public/screenshots/image.png" width="1000" alt="Home Page Screenshot" />
 
 ---
 
