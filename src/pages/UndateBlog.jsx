@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const UndateBlog = () => {
   const data = useLocation();
   const oldData = data.state;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const categories = [
     "Health",
     "Science",
@@ -24,8 +24,7 @@ const UndateBlog = () => {
     blog.userEmail = "abulHasan@gmail.com";
     blog.userPhoto = "https://example.com/images/abul-hasan.jpg"; // valid image URL
 
-    // ✅ Send PUT request to update blog
-    fetch(`http://localhost:5000/update/${oldData._id}`, {
+    fetch(`https://abulhasem-blog-server.vercel.app/update/${oldData._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -34,8 +33,8 @@ const UndateBlog = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data.acknowledged){
-       navigate(-1, { state: { updated: true } });
+        if (data.acknowledged) {
+          navigate(-1, { state: { updated: true } });
         }
         console.log("Update success:", data);
       })

@@ -1,11 +1,17 @@
-import React, { use, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import routes from "../routes/routesName";
 import { IoMdMenu, IoMdClose } from "react-icons/io";
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  const { user, signOutAccout, setUser } = use(AuthContext);
+  const { user, signOutAccout, setUser } = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
+  const handleMenu = () => setOpen(!open);
+  const handleClose = () => setOpen(false);
+  const [scrolled, setScroled] = useState(false);
+
+  // log out
   const logOut = () => {
     signOutAccout()
       .then(() => {
@@ -16,26 +22,46 @@ const Navbar = () => {
         console.log(error.message);
       });
   };
-  const [open, setOpen] = useState(false);
 
-  const handleMenu = () => setOpen(!open);
-  const handleClose = () => setOpen(false);
+  // when scrol
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setScroled(true);
+      } else {
+        setScroled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolled]);
 
   return (
-    <nav className="w-full px-[2%] h-[80px] fixed top-0    text-white bg-[#343538] flex justify-between items-center z-10">
+    <nav
+      className={`w-full sticky top-0 px-[3%] md:px-[2%] text-white bg-[rgb(0,0,0)] flex justify-between items-center z-50 transition-all duration-300 ${
+        scrolled ? "h-[70px]" : "h-[100px]"
+      }`}
+    >
       {/* Logo */}
-      <Link className="text-2xl font-Lato font-bold" to="/">
-DevHeps      </Link>
+      <Link className="text-[1.8rem]   font-Lato font-bold" to="/">
+        Dev<span className="text-red-300">Heps</span>
+      </Link>
 
-      {/* Mobile Menu Button */}
-      <button onClick={handleMenu} className="sm:hidden z-30">
+      {/* Mobile Menu Button  */}
+      <button onClick={handleMenu} className="sm:hidden  z-30">
         {open ? <IoMdClose size={32} /> : <IoMdMenu size={32} />}
       </button>
 
       {/* Navigation Links */}
       {/* Mobile Overlay */}
       <div
-        className={`sm:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-white text-black z-20 transition-transform duration-300 ease-in-out
+        className={`sm:hidden md:flex fixed ${
+          scrolled ? "top-[70px]" : "top-[100px]"
+        } left-0 w-full h-[calc(100vh-80px)] bg-white text-black z-20 transition-all duration-300 ease-in-out
         ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
         <ul className="flex flex-col w-full">
@@ -57,6 +83,14 @@ DevHeps      </Link>
         <div className="p-4 flex flex-col gap-3 ">
           {user ? (
             <>
+              <Link onClick={handleClose} className="w-full">
+                <button className="btn btn-neutral uppercase w-full">
+                  Logout
+                </button>
+              </Link>
+            </>
+          ) : (
+            <>
               <Link to="/login" onClick={handleClose}>
                 <button className="btn btn-neutral uppercase w-full">
                   Login
@@ -68,34 +102,24 @@ DevHeps      </Link>
                 </button>
               </Link>
             </>
-          ) : (
-            <>
-              <Link    onClick={handleClose} className="w-full">
-                <button className="btn btn-neutral uppercase w-full">
-                  Logout
-                </button>
-              </Link>
-            </>
           )}
         </div>
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden sm:flex sm:items-center gap-[4rem]">
-        <ul className="flex gap-4 text-white">
+      <div className="hidden  sm:flex sm:items-center lg:gap-[4rem] md:gap-2">
+        <ul className=" hidden lg:gap-4 text-white md:gap-2 md:hidden lg:flex">
           {routes.map((route, id) => (
             <li key={id} className="uppercase">
               <NavLink
                 to={route.path}
-                className="hover:text-red-300 text-[1rem] font-[500]"
+                className="hover:text-red-300 text-[14px] font-[500]"
               >
                 {route.name}
               </NavLink>
             </li>
           ))}
         </ul>
-
-
 
         {/* desktop  */}
         <div className="ml-4 flex gap-[3rem] justify-center items-center">
@@ -131,6 +155,13 @@ DevHeps      </Link>
             </>
           )}
         </div>
+
+        <button
+          onClick={handleMenu}
+          className=" md:flex ml-[1rem] lg:hidden z-30"
+        >
+          {open ? <IoMdClose size={32} /> : <IoMdMenu size={32} />}
+        </button>
       </div>
     </nav>
   );

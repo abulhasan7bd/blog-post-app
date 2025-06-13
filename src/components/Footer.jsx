@@ -1,41 +1,72 @@
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-10">
-      <nav>
-        <h6 className="footer-title">Services</h6>
-        <a className="link link-hover">Branding</a>
-        <a className="link link-hover">Design</a>
-        <a className="link link-hover">Marketing</a>
-        <a className="link link-hover">Advertisement</a>
-      </nav>
+    <footer className="bg-black text-white px-6 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+      {/* Services */}
+      <div>
+        <h6 className="text-xl font-semibold mb-4">Services</h6>
+        <ul className="space-y-2">
+          <li><a href="#" className="hover:text-red-400 transition">Branding</a></li>
+          <li><a href="#" className="hover:text-red-400 transition">Design</a></li>
+          <li><a href="#" className="hover:text-red-400 transition">Marketing</a></li>
+          <li><a href="#" className="hover:text-red-400 transition">Advertisement</a></li>
+        </ul>
+      </div>
 
-      <nav>
-        <h6 className="footer-title">Company</h6>
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
-      </nav>
+      {/* Company */}
+      <div>
+        <h6 className="text-xl font-semibold mb-4">Company</h6>
+        <ul className="space-y-2">
+          <li><a href="#" className="hover:text-red-400 transition">About us</a></li>
+          <li><a href="#" className="hover:text-red-400 transition">Contact</a></li>
+          <li><a href="#" className="hover:text-red-400 transition">Jobs</a></li>
+          <li><a href="#" className="hover:text-red-400 transition">Press kit</a></li>
+        </ul>
+      </div>
 
-      <nav>
-        <h6 className="footer-title">About Developers</h6>
-        <p className="max-w-xs">
-          Built by passionate web developers dedicated to creating clean, responsive, and engaging web experiences. Focused on performance, accessibility, and modern best practices.
+      {/* About Developers */}
+      <div>
+        <h6 className="text-xl font-semibold mb-4">About Developers</h6>
+        <p className="text-gray-400 text-sm leading-relaxed">
+          Built by passionate web developers dedicated to clean, responsive,
+          and modern user experiences. Focused on performance, accessibility,
+          and best practices.
         </p>
-      </nav>
+      </div>
 
-      <nav>
-        <h6 className="footer-title">Social</h6>
-        <div className="grid grid-flow-col gap-4">
-          <Facebook className="socilaIcons" size={40}/>
-          <Instagram className="socilaIcons cursor-pointer" size={40}/>
-          <Linkedin className="socilaIcons cursor-pointer" size={40}/>
-          <Youtube className="socilaIcons cursor-pointer" size={40}/>
+      {/* Social */}
+      <div>
+        <h6 className="text-xl font-semibold mb-4">Follow Us</h6>
+        <div className="flex space-x-4">
+          <Link
+            to="https://www.facebook.com/AbulHasanFB"
+            className="border border-red-500 bg-black rounded-full p-2 hover:bg-white transition duration-300"
+          >
+            <Facebook className="text-red-500 hover:text-black" size={26} />
+          </Link>
+          <Link
+            to="https://www.instagram.com/"
+            className="border border-red-500 bg-black rounded-full p-2 hover:bg-white transition duration-300"
+          >
+            <Instagram className="text-red-500 hover:text-black" size={26} />
+          </Link>
+          <Link
+            to="https://www.linkedin.com/"
+            className="border border-red-500 bg-black rounded-full p-2 hover:bg-white transition duration-300"
+          >
+            <Linkedin className="text-red-500 hover:text-black" size={26} />
+          </Link>
+          <Link
+            to="https://www.youtube.com/"
+            className="border border-red-500 bg-black rounded-full p-2 hover:bg-white transition duration-300"
+          >
+            <Youtube className="text-red-500 hover:text-black" size={26} />
+          </Link>
         </div>
-      </nav>
+      </div>
     </footer>
   );
 };

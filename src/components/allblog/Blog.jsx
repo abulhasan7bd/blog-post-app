@@ -1,18 +1,19 @@
 import React from "react";
-import { use } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 const Blog = ({ blog }) => {
-    const navigate = useNavigate();
-    const {user} = use(AuthContext)
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const handleWishList = (wishListItem) => {
-    console.log(wishListItem)
+    console.log(wishListItem);
     const wishListEmail = user.email;
     wishListItem.wishListEmail = wishListEmail;
- 
- 
-    fetch("http://localhost:5000/wishlist", {
+
+    fetch("https://abulhasem-blog-server.vercel.app/wishlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +33,7 @@ const Blog = ({ blog }) => {
       <div className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins ">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Image Section */}
-          <div className="relative w-full md:w-1/3">
+           <div className="w-full  md:w-1/3">
             <img
               src={blog.imgUrl}
               alt={blog.title}
@@ -61,12 +62,12 @@ const Blog = ({ blog }) => {
               <Link to={`/details/${blog._id}`} state={{ blog }}>
                 <button className="btn  capitalize bg-red-300">details </button>
               </Link>
-                <button
-              onClick={() => handleWishList(blog)}
-              className="btn  capitalize bg-red-300 border-none outline-none"
-            >
-              wishlist
-            </button>
+              <button
+                onClick={() => handleWishList(blog)}
+                className="btn  capitalize bg-red-300 border-none outline-none"
+              >
+                wishlist
+              </button>
             </div>
           </div>
         </div>

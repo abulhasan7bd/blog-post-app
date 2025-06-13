@@ -1,10 +1,10 @@
-import React, { use } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
-  const { signWithGoogle, login } = use(AuthContext);
+  const { signWithGoogle, login } = useContext(AuthContext);
   const loginUser = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -36,13 +36,14 @@ const Login = () => {
     signWithGoogle()
       .then((res) => {
         console.log(res);
+        navigate("/")
       })
       .catch((err) => {
         console.log(err);
       });
   };
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-100 px-4">
+    <div className="flex justify-center items-center my-[30px] bg-base-100 px-4">
       <form
         onSubmit={loginUser}
         className="fieldset bg-base-200 border-base-300 rounded-box w-full max-w-sm border p-6 shadow-md"
@@ -83,14 +84,7 @@ const Login = () => {
           Continue with Google
         </button>
 
-        <button className="btn w-full bg-[#1877F2] text-white hover:bg-[#1558b0]">
-          <img
-            src="https://www.svgrepo.com/show/452196/facebook-1.svg"
-            alt="Facebook"
-            className="w-5 h-5 mr-2"
-          />
-          Continue with Facebook
-        </button>
+   
       </form>
     </div>
   );

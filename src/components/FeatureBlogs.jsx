@@ -1,7 +1,9 @@
 import React from "react";
 import TopTenPost from "../pages/TopTenPost";
+import { useLoaderData } from "react-router-dom";
 
 const FeatureBlogs = () => {
+  const allBlog = useLoaderData();
   const dummyPosts = [
     {
       id: 1,
@@ -19,7 +21,7 @@ const FeatureBlogs = () => {
       longDescription:
         "Node.js is a runtime environment that allows JavaScript to be run on the server side...",
     },
-     {
+    {
       id: 1,
       name: "Abul Hasem",
       email: "abul@example.com",
@@ -35,7 +37,7 @@ const FeatureBlogs = () => {
       longDescription:
         "Node.js is a runtime environment that allows JavaScript to be run on the server side...",
     },
-     {
+    {
       id: 1,
       name: "Abul Hasem",
       email: "abul@example.com",
@@ -51,7 +53,7 @@ const FeatureBlogs = () => {
       longDescription:
         "Node.js is a runtime environment that allows JavaScript to be run on the server side...",
     },
-     {
+    {
       id: 1,
       name: "Abul Hasem",
       email: "abul@example.com",
@@ -67,7 +69,7 @@ const FeatureBlogs = () => {
       longDescription:
         "Node.js is a runtime environment that allows JavaScript to be run on the server side...",
     },
-     {
+    {
       id: 1,
       name: "Abul Hasem",
       email: "abul@example.com",
@@ -83,7 +85,7 @@ const FeatureBlogs = () => {
       longDescription:
         "Node.js is a runtime environment that allows JavaScript to be run on the server side...",
     },
-     {
+    {
       id: 1,
       name: "Abul Hasem",
       email: "abul@example.com",
@@ -99,7 +101,7 @@ const FeatureBlogs = () => {
       longDescription:
         "Node.js is a runtime environment that allows JavaScript to be run on the server side...",
     },
-     {
+    {
       id: 1,
       name: "Abul Hasem",
       email: "abul@example.com",
@@ -115,7 +117,7 @@ const FeatureBlogs = () => {
       longDescription:
         "Node.js is a runtime environment that allows JavaScript to be run on the server side...",
     },
-     {
+    {
       id: 1,
       name: "Abul Hasem",
       email: "abul@example.com",
@@ -131,7 +133,7 @@ const FeatureBlogs = () => {
       longDescription:
         "Node.js is a runtime environment that allows JavaScript to be run on the server side...",
     },
-     {
+    {
       id: 1,
       name: "Abul Hasem",
       email: "abul@example.com",
@@ -147,7 +149,7 @@ const FeatureBlogs = () => {
       longDescription:
         "Node.js is a runtime environment that allows JavaScript to be run on the server side...",
     },
-     {
+    {
       id: 1,
       name: "Abul Hasem",
       email: "abul@example.com",
@@ -167,7 +169,7 @@ const FeatureBlogs = () => {
   ];
   return (
     <div>
-      <TopTenPost posts={dummyPosts} />
+      <TopTenPost posts={dummyPosts} allBlog={allBlog}/>
     </div>
   );
 };

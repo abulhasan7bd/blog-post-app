@@ -1,10 +1,10 @@
-import React, { use, useState } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Signin = () => {
-  const { createUserEmailPassword, update, signWithGoogle } = use(AuthContext);
+  const { createUserEmailPassword, update, signWithGoogle } = useContext(AuthContext);
   const [error, setError] = useState([]);
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ const Signin = () => {
     setPassword(e.target.value), setError([]);
   };
   return (
-    <div className="mt-[120px] mb-[60px]">
+    <div className="mt-[30px] mb-[60px]">
       <form
         onSubmit={register}
         className="mx-auto bg-base-200 border-base-300 rounded-box w-full max-w-md border p-4"

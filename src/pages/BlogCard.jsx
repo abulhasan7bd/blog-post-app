@@ -1,16 +1,17 @@
-import React, { use } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { motion } from "framer-motion";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
+
 const BlogCard = ({ blog }) => {
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleWishList = (wishListItem) => {
-    console.log(wishListItem)
     const wishListEmail = user.email;
     wishListItem.wishListEmail = wishListEmail;
- 
- 
-    fetch("http://localhost:5000/wishlist", {
+    fetch(" https://abulhasem-blog-server.vercel.app/wishlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,15 +27,24 @@ const BlogCard = ({ blog }) => {
       });
   };
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins ">
+    <motion.div
+      initial={{ opacity: 0, translateY: -10 }}
+      whileInView={{ opacity: 1, translateY: 0 }}
+      viewport={{ once: false }}
+      transition={{ duration: 2 }}
+      className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins "
+    >
       <div className="flex flex-col md:flex-row gap-6">
-        {/* Image Section */}
         <div className="relative w-full md:w-1/3">
-          <img
-            src={blog.imgUrl}
-            alt={blog.title}
-            className="w-full h-full object-cover rounded-md"
-          />
+          <PhotoProvider>
+            <PhotoView src={blog.imgUrl}>
+              <img
+                src={blog.imgUrl}
+                alt={blog.title}
+                className="w-full h-full object-cover rounded-md cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-black/30"
+              />
+            </PhotoView>
+          </PhotoProvider>
         </div>
 
         {/* Text Content Section */}
@@ -55,8 +65,8 @@ const BlogCard = ({ blog }) => {
           {/* Description */}
           <p className="text-gray-600 text-sm">{blog.shortDescription}</p>
           <div className="btns flex gap-[2rem] mt-[1rem]">
-            <Link to={`/details/${blog._id}`} state={{ blog }}>
-              <button className="btn  capitalize bg-red-300">details </button>
+            <Link to={`/details/${blog._id}`}>
+              <button className="btn  capitalize bg-red-300">detapils </button>
             </Link>
             <button
               onClick={() => handleWishList(blog)}
@@ -67,7 +77,7 @@ const BlogCard = ({ blog }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

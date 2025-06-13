@@ -1,35 +1,31 @@
 import { Loader, MessageCircleOff } from "lucide-react";
-import React, { use, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Details = () => {
   // ======
   const navigate = useNavigate();
-  const { user, loading } = use(AuthContext);
-  const blogDetails = useLoaderData(); 
-  const [commentLoading,setCommentLoading]=useState(true)
-  
-  // COMMENT BOX 
+  const { user, loading } = useContext(AuthContext);
+  const blogDetails = useLoaderData();
+  const [commentLoading, setCommentLoading] = useState(true);
+
+  // COMMENT BOX
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
- 
 
   // USER INFORMATION
   const loginUserEmail = user?.email;
   const blogDetailsEmail = blogDetails?.userEmail;
 
-
-
-
   const handlePost = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // COMMENTOR INFO
     const commentorName = user?.displayName;
     const commentorProfile = user?.photoURL;
     const commentorText = comment;
 
-    setCommentLoading(false)
+    setCommentLoading(false);
     // LATEST COMMENT
     const currentComment = {
       commentorName: commentorName,
@@ -38,7 +34,7 @@ const Details = () => {
       commentPostId: blogDetails._id,
     };
 
-    fetch("http://localhost:5000/comment", {
+    fetch("https://abulhasem-blog-server.vercel.app/comment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,35 +42,49 @@ const Details = () => {
       body: JSON.stringify(currentComment),
     })
       .then((res) => {
-      setCommentLoading(true)
-        console.log(res);
+        setCommentLoading(true);
+        setComment("");
       })
       .catch((err) => {
-        setCommentLoading(false)
+        setCommentLoading(false);
         console.log(err);
       });
   };
 
-  console.log(commentLoading)
+  const handleCommentDelet = (item) => {
+    if (item.commentorName === user?.displayName) {
+      fetch(`https://abulhasem-blog-server.vercel.app/commentDelet/${item._id}`, {
+        method: "DELETE",
+      })
+        .then((res) => {
+          console.log(res);
+          setCommentLoading(true);
+          setComment((prev) => (prev?.id === item.id ? null : item));
+        })
+        .catch((err) => console.log(err));
+    } else {
+      return;
+    }
+  };
   const handleUpdate = (blogDetails) => {
     navigate(`/update-blog/${blogDetails._id}`, { state: blogDetails });
   };
 
-
-useEffect(() => {
-  fetch(`http://localhost:5000/commenFind/${blogDetails._id}`)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      setCommentLoading(false);
-      setComments(data);
-    })
-    .catch((err) => {
-      console.log(err.message);
-      setCommentLoading(true);
-    });
-}, [commentLoading]);
-
+  useEffect(() => {
+    fetch(
+      `https://abulhasem-blog-server.vercel.app/commenFind/${blogDetails._id}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setCommentLoading(false);
+        setComments(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setCommentLoading(true);
+      });
+  }, [commentLoading]);
 
   if (loading) {
     return <h3>Loading........</h3>;
@@ -232,21 +242,19 @@ useEffect(() => {
             </p>
           ) : (
             <div className="flex flex-col  gap-2 mt-2 w-full">
-             <form onSubmit={handlePost}>
-               <textarea
-                type="text"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="What are your thoughts?"
-                className="w-full p-2 rounded bg-gray-100 focus:outline-none h-[100px] resize-none focus:ring-2 focus:ring-blue-500"required
-              />
-              <button
-                className="bg-blue-600 text-white   py-1 rounded hover:bg-blue-700 w-fit px-[2rem] ml-auto cursor-pointer"
-                
-              >
-                Post
-              </button>
-             </form>
+              <form onSubmit={handlePost}>
+                <textarea
+                  type="text"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="What are your thoughts?"
+                  className="w-full p-2 rounded bg-gray-100 focus:outline-none h-[100px] resize-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+                <button className="bg-blue-600 text-white   py-1 rounded hover:bg-blue-700 w-fit px-[2rem] ml-auto cursor-pointer">
+                  Post
+                </button>
+              </form>
             </div>
           )}
         </div>
@@ -265,10 +273,23 @@ useEffect(() => {
                 alt={c.name}
                 className="w-10 h-10 rounded-full object-cover"
               />
-              <div>
-                <p className="font-semibold text-sm">{c.commentorName
-}</p>
-                <p className="text-gray-800 text-sm">{c.commentorText}</p>
+              <div className="flex justify-between  items-center w-full">
+                <div>
+                  <p className="font-semibold text-sm">{c.commentorName}</p>
+                  <p className="text-gray-800 text-sm">{c.commentorText}</p>
+                </div>
+               <button
+  className={`bg-red-300 px-[1rem] py-1 disabled:opacity-50 ${
+    c.commentorName === user?.displayName
+      ? "cursor-pointer"
+      : "disabled:cursor-not-allowed"
+  }`}
+  onClick={() => handleCommentDelet(c)}
+  disabled={c.commentorName !== user?.displayName}
+>
+  X
+</button>
+
               </div>
             </div>
           ))}

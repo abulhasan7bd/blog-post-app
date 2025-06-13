@@ -13,6 +13,7 @@ const Home = () => {
       <NewsLetter />
       <Trips/>
       <CommunitySpotlight/>
+ 
     </div>
   );
 };

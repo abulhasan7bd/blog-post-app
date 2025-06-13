@@ -30,6 +30,9 @@ It helped improve my production skills and introduced me to real-world performan
 - 🔁 SPA routing with React Router  
 - ⚛️ Built completely in React
 
+## 🦞 Component Library
+DaisyUI — A Tailwind CSS plugin that provides pre-built, customizable UI components for rapid development.
+
 ## 📦 Tech Stack
 
 - React  
@@ -38,6 +41,8 @@ It helped improve my production skills and introduced me to real-world performan
 - Typewriter Effect  
 - TanStack Form  
 - Framer Motion / Scroll Animations
+- React loading skeleton
+- React Photo View
 
 ## 🔗 Live Site
 
@@ -45,11 +50,10 @@ It helped improve my production skills and introduced me to real-world performan
 
 ## 📂 Repository
 
-[GitHub Repo](https://github.com/yourusername/devheps) <!-- Replace with actual repo -->
+[GitHub Repo](https://github.com/Programming-Hero-Web-Course4/b11a11-client-side-abulhasan7bd.git) <!-- Replace with actual repo -->
 
 ## 📸 Screenshots
-
-*(Add screenshots of your site here if needed)*
+<img src="./../11-client/public/screenshots/banner.png" width="600" alt="Home Page Screenshot" />
 
 ---
 

@@ -1,8 +1,13 @@
-import React, { use } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import NotFound from "./NotFound";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddBlogs = () => {
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
+  const [error, setErrot] = useState("");
+  const navigate = useNavigate();
   const categories = [
     "Health",
     "Science",
@@ -43,24 +48,51 @@ const AddBlogs = () => {
     const formattedDate = `${month} ${day}, ${year}`;
     blog.time = formattedDate;
 
-    // CREATE BLOG
-    fetch("http://localhost:5000/add-blog", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(blog),
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    const handleSubmit = async () => {
+      try {
+        const response = await fetch(
+          "https://abulhasem-blog-server.vercel.app/add-blog",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ blog, email: user.email }),
+          }
+        );
 
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to create blog");
+        }
+
+        const result = await response.json();
+        Swal.fire({
+          icon: "success",
+          title: "Blog Created!",
+          text: "Your blog post has been published successfully.",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        }).then(() => {
+          navigate("/all-blogs");
+        });
+
+        console.log("Blog created successfully:", result);
+      } catch (err) {
+        setErrot(err.message);
+        console.error("Server error:", err.message);
+      }
+    };
+
+    handleSubmit();
+  };
+  if (error) {
+    return <NotFound res={error} />;
+  }
   return (
-    <div className="max-w-5xl mx-auto my-[100px] p-6 bg-base-200 border border-base-300 rounded-lg shadow-md  ">
+    <div className="max-w-5xl mx-auto my-[50px] p-6 bg-base-200 border border-base-300 rounded-lg shadow-md  ">
       <form onSubmit={handleSubmit} className="space-y-6">
         <h2 className="text-3xl font-semibold mb-6 text-center">
           Create A New Blog

@@ -5,18 +5,20 @@ import Footer from "../components/Footer";
 
 const MainLayout = () => {
   return (
-    <div className="font-Poppins">
-      <div>
-        <Navbar />
-      </div>
-      <div className="mt-[80px]">
+    <div className="font-Poppins min-h-screen flex flex-col overflow-visible">
+      {/* Sticky Navbar */}
+      <Navbar />
+
+      {/* Main Content */}
+      <main className="flex-1">
         <Outlet />
-      </div>
-      <div>
-        <Footer />
-      </div>
+      </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
 
 export default MainLayout;
+

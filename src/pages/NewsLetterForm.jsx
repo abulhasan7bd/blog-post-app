@@ -1,19 +1,26 @@
 import React from "react";
 import { ToastContainer, toast } from "react-toastify";
-
+import { motion } from "framer-motion";
 const NewsLetterForm = () => {
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let message = "Thank you for subscribing to our newsletter.";
-    toast.success(message,{
- 
-        progress: undefined,
-        closeOnClick: true,
+    toast.success(message, {
+      progress: undefined,
+      closeOnClick: true,
     });
+    e.target.name.value = ""
+    e.target.email.value = ""
   };
   return (
-    <div className="  min-h-screen flex flex-col md:flex-row items-center justify-center gap-[1rem] p-4 mt-[20px]">
-      <ToastContainer/>
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: false }}
+      transition={{ duration: 0.9 }}
+      className="  min-h-screen flex flex-col md:flex-row items-center justify-center gap-[1rem] p-4 mt-[20px]"
+    >
+      <ToastContainer />
       <div className="  w-[74%] md:w-[50%] lg:w-[30%] flex justify-center items-center">
         <img
           src="https://img.freepik.com/free-vector/developer-activity-concept-illustration_114360-2801.jpg?uid=R90026751&ga=GA1.1.1322734213.1735572178&semt=ais_items_boosted&w=740"
@@ -38,11 +45,12 @@ const NewsLetterForm = () => {
               className="w-full  border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Write your feedback"
               required
-            />
+
+name="name"/>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label className="block text-sm font-medium  text-gray-600 mb-1">
               Email
             </label>
             <input
@@ -50,6 +58,7 @@ const NewsLetterForm = () => {
               className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Your email"
               required
+              name="email"
             />
           </div>
 
@@ -61,7 +70,7 @@ const NewsLetterForm = () => {
           </button>
         </fieldset>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

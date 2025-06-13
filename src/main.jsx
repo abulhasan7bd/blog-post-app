@@ -15,37 +15,57 @@ import Login from "./components/auth/Login";
 import Signin from "./components/auth/Signin";
 import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./pages/NotFound";
+ import ScrolTopx from "./pages/ScrolTop";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+
+    element: (
+      <>
+        <ScrolTopx />
+        <MainLayout />
+      </>
+    ),
     children: [
       {
         index: true,
         loader: () => {
-          return fetch("http://localhost:5000/all-blogs").then((res) =>
-            res.json()
-          );
+          return fetch(
+            "https://abulhasem-blog-server.vercel.app/all-blogs"
+          ).then((res) => res.json());
         },
         element: <Home />,
       },
       {
         path: "/all-blogs",
         loader: () => {
-          return fetch("http://localhost:5000/all-blogs").then((res) =>
-            res.json()
-          );
+          return fetch(
+            "https://abulhasem-blog-server.vercel.app/all-blogs"
+          ).then((res) => res.json());
         },
         element: <AllBlogs />,
       },
       {
         path: "/details/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/singleblog/${params.id}`),
-        element: <Details />,
+          fetch(
+            `https://abulhasem-blog-server.vercel.app/singleblog/${params.id}`
+          ),
+        element: (
+          <PrivateRoute>
+            <Details />
+          </PrivateRoute>
+        ),
       },
-      { path: "/blog/update/:id", element: <Details /> },
+      {
+        path: "/blog/update/:id",
+        element: (
+          <PrivateRoute>
+            <Details />
+          </PrivateRoute>
+        ),
+      },
       { path: "*", element: <NotFound /> },
       {
         path: "/add-blog",
@@ -56,7 +76,15 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/update-blog/:id", element: <UndateBlog /> },
-      { path: "/featured-blogs", element: <FeatureBlogs /> },
+      {
+        path: "/featured-blogs",
+        loader: () => {
+          return fetch(
+            "https://abulhasem-blog-server.vercel.app/all-blogs"
+          ).then((res) => res.json());
+        },
+        element: <FeatureBlogs />,
+      },
 
       {
         path: "/wishlist",

@@ -1,5 +1,6 @@
 import React from 'react';
-import { User, MessageSquareQuote, Github } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { MessageSquareQuote, Github } from 'lucide-react';
 
 const spotlight = [
   {
@@ -25,6 +26,19 @@ const spotlight = [
   }
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.9,
+      ease: 'easeOut',
+    }
+  })
+};
+
 const CommunitySpotlight = () => {
   return (
     <section className="bg-white py-16 px-4 md:px-8">
@@ -35,8 +49,13 @@ const CommunitySpotlight = () => {
         </p>
         <div className="grid md:grid-cols-3 gap-8">
           {spotlight.map((user, index) => (
-            <div
+            <motion.div
               key={index}
+              custom={index}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
               className="bg-gray-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition text-left"
             >
               <div className="flex items-center gap-4 mb-4">
@@ -62,7 +81,7 @@ const CommunitySpotlight = () => {
               >
                 <Github className="w-4 h-4 mr-1" /> GitHub Profile
               </a>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

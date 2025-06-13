@@ -59,20 +59,62 @@ const AuthProvider = ({ children }) => {
     login,
   };
 
-  //   GLOBALLY SIDE EFFECT
-  useEffect(() => {
-    const suscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setLoading(false)
-        setUser(user);
-        console.log(user);
-      } else {
-        setLoading(false)
-        console.log("Sing out");
-      }
-    });
-    return () => suscribe();
-  }, [user]);
+// ✅ Global Auth Side Effect (inside AuthProvider.jsx)
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUser(user);
+      setLoading(false);
+      console.log("User logged in:", user);
+
+      const email = user.email;
+
+      // 🔐 Step 1: Create JWT
+      fetch("https://abulhasem-blog-server.vercel.app/jwtCreate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ email }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("JWT created:", data);
+
+          // 🕒 Step 2: Delay to ensure cookie is set
+          setTimeout(() => {
+            // 📦 Step 3: Fetch Wishlist
+            const email = "abulhasan7bd@gmail.com"
+            fetch(`https://abulhasem-blog-server.vercel.app/all-wishlist?email=${email}`, {
+              method: "GET",
+              credentials: "include",
+            })
+              .then((res) => res.json())
+              .then((wishlistData) => {
+                console.log("Wishlist:", wishlistData);
+                // ✅ Set wishlist to state if needed
+                // setWishlist(wishlistData);
+              })
+              .catch((err) => {
+                console.error("Wishlist fetch error:", err);
+              });
+          }, 500); // 🔁 Wait for cookie to be available
+        })
+        .catch((err) => {
+          console.error("JWT error:", err);
+        });
+
+    } else {
+      setUser(null);
+      setLoading(false);
+      console.log("User signed out");
+    }
+  });
+
+  return () => unsubscribe(); // 🔄 Clean up on unmount
+}, []);
+
 
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
