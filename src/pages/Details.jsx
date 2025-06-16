@@ -53,11 +53,13 @@ const Details = () => {
 
   const handleCommentDelet = (item) => {
     if (item.commentorName === user?.displayName) {
-      fetch(`https://abulhasem-blog-server.vercel.app/commentDelet/${item._id}`, {
-        method: "DELETE",
-      })
+      fetch(
+        `https://abulhasem-blog-server.vercel.app/commentDelet/${item._id}`,
+        {
+          method: "DELETE",
+        }
+      )
         .then((res) => {
-          console.log(res);
           setCommentLoading(true);
           setComment((prev) => (prev?.id === item.id ? null : item));
         })
@@ -76,7 +78,6 @@ const Details = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setCommentLoading(false);
         setComments(data);
       })
@@ -278,18 +279,17 @@ const Details = () => {
                   <p className="font-semibold text-sm">{c.commentorName}</p>
                   <p className="text-gray-800 text-sm">{c.commentorText}</p>
                 </div>
-               <button
-  className={`bg-red-300 px-[1rem] py-1 disabled:opacity-50 ${
-    c.commentorName === user?.displayName
-      ? "cursor-pointer"
-      : "disabled:cursor-not-allowed"
-  }`}
-  onClick={() => handleCommentDelet(c)}
-  disabled={c.commentorName !== user?.displayName}
->
-  X
-</button>
-
+                <button
+                  className={`bg-red-300 px-[1rem] py-1 disabled:opacity-50 ${
+                    c.commentorName === user?.displayName
+                      ? "cursor-pointer"
+                      : "disabled:cursor-not-allowed"
+                  }`}
+                  onClick={() => handleCommentDelet(c)}
+                  disabled={c.commentorName !== user?.displayName}
+                >
+                  X
+                </button>
               </div>
             </div>
           ))}

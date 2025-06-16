@@ -28,11 +28,11 @@ const BlogCard = ({ blog }) => {
   };
   return (
     <motion.div
-      initial={{ opacity: 0, translateY: -10 }}
-      whileInView={{ opacity: 1, translateY: 0 }}
-      viewport={{ once: false }}
-      transition={{ duration: 2 }}
-      className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins "
+      initial={{ opacity: 0, y: -50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, amount: 0.2 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins"
     >
       <div className="flex flex-col md:flex-row gap-6">
         <div className="relative w-full md:w-1/3">
@@ -66,7 +66,7 @@ const BlogCard = ({ blog }) => {
           <p className="text-gray-600 text-sm">{blog.shortDescription}</p>
           <div className="btns flex gap-[2rem] mt-[1rem]">
             <Link to={`/details/${blog._id}`}>
-              <button className="btn  capitalize bg-red-300">detapils </button>
+              <button className="btn  capitalize bg-red-300">Details </button>
             </Link>
             <button
               onClick={() => handleWishList(blog)}

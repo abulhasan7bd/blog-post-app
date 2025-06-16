@@ -36,7 +36,7 @@ const Header = () => {
       >
         {data.map((item, id) => {
           return (
-            <SwiperSlide>
+            <SwiperSlide key={id}>
               <SliderH data={item} key={id} />
             </SwiperSlide>
           );

@@ -1,43 +1,33 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { MessageSquareQuote, Github } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { MessageSquareQuote, Github } from "lucide-react";
 
 const spotlight = [
   {
-    name: 'Sarah Kim',
-    role: 'Frontend Developer',
-    avatar: 'https://i.pravatar.cc/150?img=32',
-    comment: '“This blog helped me fix a nasty bug with async React calls. Thank you for the clarity!”',
-    github: 'https://github.com/sarahdev',
+    name: "Sarah Kim",
+    role: "Frontend Developer",
+    avatar: "https://i.pravatar.cc/150?img=32",
+    comment:
+      "“This blog helped me fix a nasty bug with async React calls. Thank you for the clarity!”",
+    github: "https://github.com/sarahdev",
   },
   {
-    name: 'James Walker',
-    role: 'Full Stack Engineer',
-    avatar: 'https://i.pravatar.cc/150?img=12',
-    comment: '“The article on Node.js performance tips was a lifesaver for our backend optimization.”',
-    github: 'https://github.com/jameswalker',
+    name: "James Walker",
+    role: "Full Stack Engineer",
+    avatar: "https://i.pravatar.cc/150?img=12",
+    comment:
+      "“The article on Node.js performance tips was a lifesaver for our backend optimization.”",
+    github: "https://github.com/jameswalker",
   },
   {
-    name: 'Aisha Rahman',
-    role: 'Junior Web Developer',
-    avatar: 'https://i.pravatar.cc/150?img=24',
-    comment: '“Love the clean UI and helpful code snippets. Feels like a mentor in my pocket!”',
-    github: 'https://github.com/aishar',
-  }
+    name: "Aisha Rahman",
+    role: "Junior Web Developer",
+    avatar: "https://i.pravatar.cc/150?img=24",
+    comment:
+      "“Love the clean UI and helpful code snippets. Feels like a mentor in my pocket!”",
+    github: "https://github.com/aishar",
+  },
 ];
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.2,
-      duration: 0.9,
-      ease: 'easeOut',
-    }
-  })
-};
 
 const CommunitySpotlight = () => {
   return (
@@ -45,17 +35,17 @@ const CommunitySpotlight = () => {
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-3xl font-bold mb-4">👥 Community Spotlight</h2>
         <p className="text-gray-600 mb-12">
-          Meet some of our amazing readers and contributors who are shaping the dev world with us.
+          Meet some of our amazing readers and contributors who are shaping the
+          dev world with us.
         </p>
         <div className="grid md:grid-cols-3 gap-8">
           {spotlight.map((user, index) => (
             <motion.div
               key={index}
-              custom={index}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: false, amount: 0.6 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
               className="bg-gray-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition text-left"
             >
               <div className="flex items-center gap-4 mb-4">

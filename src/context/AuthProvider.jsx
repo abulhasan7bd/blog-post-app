@@ -65,7 +65,7 @@ useEffect(() => {
     if (user) {
       setUser(user);
       setLoading(false);
-      console.log("User logged in:", user);
+      // console.log("User logged in:", user);
 
       const email = user.email;
 
@@ -79,36 +79,18 @@ useEffect(() => {
         body: JSON.stringify({ email }),
       })
         .then((res) => res.json())
-        .then((data) => {
-          console.log("JWT created:", data);
-
-          // 🕒 Step 2: Delay to ensure cookie is set
-          setTimeout(() => {
-            // 📦 Step 3: Fetch Wishlist
-            const email = "abulhasan7bd@gmail.com"
-            fetch(`https://abulhasem-blog-server.vercel.app/all-wishlist?email=${email}`, {
-              method: "GET",
-              credentials: "include",
-            })
-              .then((res) => res.json())
-              .then((wishlistData) => {
-                console.log("Wishlist:", wishlistData);
-                // ✅ Set wishlist to state if needed
-                // setWishlist(wishlistData);
-              })
-              .catch((err) => {
-                console.error("Wishlist fetch error:", err);
-              });
-          }, 500); // 🔁 Wait for cookie to be available
+        .then(() => {
+          // console.log("JWT created:", data);
         })
         .catch((err) => {
-          console.error("JWT error:", err);
+          console.log(err.message)
+ 
         });
 
     } else {
       setUser(null);
       setLoading(false);
-      console.log("User signed out");
+      // console.log("User signed out");
     }
   });
 
