@@ -41,27 +41,29 @@ const Navbar = () => {
   }, [scrolled]);
 
   return (
-    <nav
-      className={`w-full sticky top-0 px-[3%] md:px-[2%] text-white bg-[rgb(0,0,0)] flex justify-between items-center z-50 transition-all duration-300 ${
-        scrolled ? "h-[70px]" : "h-[100px]"
-      }`}
+     <nav
+      className={`w-full sticky top-0 px-[3%] md:px-[2%] 
+        text-white bg-[#1E293B] flex justify-between items-center 
+        z-50 transition-all duration-300 ${
+          scrolled ? "h-[70px]" : "h-[100px]"
+        }`}
     >
       {/* Logo */}
-      <Link className="text-[1.8rem]   font-Lato font-bold" to="/">
-        Dev<span className="text-red-300">Heps</span>
+      <Link className="text-[1.8rem] font-Lato font-bold" to="/">
+        Dev<span className="text-[#38BDF8]">Heps</span>
       </Link>
 
-      {/* Mobile Menu Button  */}
-      <button onClick={handleMenu} className="sm:hidden  z-30">
+      {/* Mobile Menu Button */}
+      <button onClick={handleMenu} className="sm:hidden z-30">
         {open ? <IoMdClose size={32} /> : <IoMdMenu size={32} />}
       </button>
 
-      {/* Navigation Links */}
-      {/* Mobile Overlay */}
+      {/* Mobile Navigation */}
       <div
         className={`sm:hidden md:flex fixed ${
           scrolled ? "top-[70px]" : "top-[100px]"
-        } left-0 w-full h-[calc(100vh-80px)] bg-white text-black z-20 transition-all duration-300 ease-in-out
+        } left-0 w-full h-[calc(100vh-80px)] bg-white text-black z-20 
+        transition-all duration-300 ease-in-out
         ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
         <ul className="flex flex-col w-full">
@@ -73,21 +75,25 @@ const Navbar = () => {
             >
               <NavLink
                 to={route.path}
-                className="block py-4 hover:text-red-300"
+                className="block py-4 hover:text-[#38BDF8]"
               >
                 {route.name}
               </NavLink>
             </li>
           ))}
         </ul>
-        <div className="p-4 flex flex-col gap-3 ">
+        <div className="p-4 flex flex-col gap-3">
           {user ? (
             <>
-              <Link onClick={handleClose} className="w-full">
-                <button className="btn btn-neutral uppercase w-full">
-                  Logout
-                </button>
-              </Link>
+              <button
+                onClick={() => {
+                  logOut();
+                  handleClose();
+                }}
+                className="btn btn-neutral uppercase w-full"
+              >
+                Logout
+              </button>
             </>
           ) : (
             <>
@@ -107,13 +113,13 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden  sm:flex sm:items-center lg:gap-[4rem] md:gap-2">
-        <ul className=" hidden lg:gap-4 text-white md:gap-2 md:hidden lg:flex">
+      <div className="hidden sm:flex sm:items-center lg:gap-[4rem] md:gap-2">
+        <ul className="hidden lg:gap-4 text-white md:gap-2 md:hidden lg:flex">
           {routes.map((route, id) => (
             <li key={id} className="uppercase">
               <NavLink
                 to={route.path}
-                className="hover:text-red-300 text-[14px] font-[500]"
+                className="hover:text-[#38BDF8] text-[14px] font-[500]"
               >
                 {route.name}
               </NavLink>
@@ -121,21 +127,20 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* desktop  */}
+        {/* Desktop Auth */}
         <div className="ml-4 flex gap-[3rem] justify-center items-center">
           {user ? (
             <>
               <div className="w-[50px] h-[50px]">
                 <img
                   className="w-full h-full rounded-full object-cover"
-                  src={user && user.photoURL}
+                  src={user.photoURL}
                   alt="User Avatar"
                 />
               </div>
-
               <button
                 onClick={logOut}
-                className="btn btn-neutral uppercase border-red-300 px-[2rem]"
+                className="btn btn-neutral uppercase border-[#38BDF8] px-[2rem]"
               >
                 Logout
               </button>
@@ -143,12 +148,12 @@ const Navbar = () => {
           ) : (
             <>
               <Link to="/login">
-                <button className="btn btn-neutral uppercase border-red-300 px-[2rem]">
+                <button className="btn btn-neutral uppercase border-[#38BDF8] px-[2rem]">
                   Login
                 </button>
               </Link>
               <Link to="/register">
-                <button className="btn btn-neutral uppercase border-red-300 px-[2rem]">
+                <button className="btn btn-neutral uppercase border-[#38BDF8] px-[2rem]">
                   Register
                 </button>
               </Link>
@@ -156,9 +161,10 @@ const Navbar = () => {
           )}
         </div>
 
+        {/* Mobile menu toggle in desktop small screens */}
         <button
           onClick={handleMenu}
-          className=" md:flex ml-[1rem] lg:hidden z-30"
+          className="md:flex ml-[1rem] lg:hidden z-30"
         >
           {open ? <IoMdClose size={32} /> : <IoMdMenu size={32} />}
         </button>
