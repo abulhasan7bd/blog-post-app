@@ -11,17 +11,14 @@ const WishList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [wishlist, setWishlist] = useState([]);
-  
+
   useEffect(() => {
     if (!user?.email) return;
     setLoading(true);
-    fetch(
-      `https://abulhasem-blog-server.vercel.app/all-wishlist?email=${user.email}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    )
+    fetch(`http://localhost:5000/all-wishlist?email=${user.email}`, {
+      method: "GET",
+      credentials: "include",
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch wishlist");
@@ -40,13 +37,10 @@ const WishList = () => {
 
   const handleRemove = async (id) => {
     try {
-      const res = await fetch(
-        `https://abulhasem-blog-server.vercel.app/wish-list-remove/${id}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`http://localhost:5000/wish-list-remove/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
 
       if (!res.ok) {
         throw new Error("Failed to delete item");

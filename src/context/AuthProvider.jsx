@@ -59,44 +59,41 @@ const AuthProvider = ({ children }) => {
     login,
   };
 
-// ✅ Global Auth Side Effect (inside AuthProvider.jsx)
-useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user);
-      setLoading(false);
-      // console.log("User logged in:", user);
+  // ✅ Global Auth Side Effect (inside AuthProvider.jsx)
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        setLoading(false);
+        // console.log("User logged in:", user);
 
-      const email = user.email;
+        const email = user.email;
 
-      // 🔐 Step 1: Create JWT
-      fetch("https://abulhasem-blog-server.vercel.app/jwtCreate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ email }),
-      })
-        .then((res) => res.json())
-        .then(() => {
-          // console.log("JWT created:", data);
+        // 🔐 Step 1: Create JWT
+        fetch("http://localhost:5000/jwtCreate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ email }),
         })
-        .catch((err) => {
-          console.log(err.message)
- 
-        });
+          .then((res) => res.json())
+          .then(() => {
+            // console.log("JWT created:", data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      } else {
+        setUser(null);
+        setLoading(false);
+        // console.log("User signed out");
+      }
+    });
 
-    } else {
-      setUser(null);
-      setLoading(false);
-      // console.log("User signed out");
-    }
-  });
-
-  return () => unsubscribe(); // 🔄 Clean up on unmount
-}, []);
-
+    return () => unsubscribe(); // 🔄 Clean up on unmount
+  }, []);
 
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

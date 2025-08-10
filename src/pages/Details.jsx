@@ -34,7 +34,7 @@ const Details = () => {
       commentPostId: blogDetails._id,
     };
 
-    fetch("https://abulhasem-blog-server.vercel.app/comment", {
+    fetch("http://localhost:5000/comment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,12 +53,9 @@ const Details = () => {
 
   const handleCommentDelet = (item) => {
     if (item.commentorName === user?.displayName) {
-      fetch(
-        `https://abulhasem-blog-server.vercel.app/commentDelet/${item._id}`,
-        {
-          method: "DELETE",
-        }
-      )
+      fetch(`http://localhost:5000/commentDelet/${item._id}`, {
+        method: "DELETE",
+      })
         .then((res) => {
           setCommentLoading(true);
           setComment((prev) => (prev?.id === item.id ? null : item));
@@ -73,9 +70,7 @@ const Details = () => {
   };
 
   useEffect(() => {
-    fetch(
-      `https://abulhasem-blog-server.vercel.app/commenFind/${blogDetails._id}`
-    )
+    fetch(`http://localhost:5000/commenFind/${blogDetails._id}`)
       .then((res) => res.json())
       .then((data) => {
         setCommentLoading(false);

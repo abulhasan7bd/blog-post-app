@@ -2,8 +2,8 @@ import React from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { PhotoProvider, PhotoView } from 'react-photo-view';
-import 'react-photo-view/dist/react-photo-view.css';
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 
 const Blog = ({ blog }) => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const Blog = ({ blog }) => {
     const wishListEmail = user.email;
     wishListItem.wishListEmail = wishListEmail;
 
-    fetch("https://abulhasem-blog-server.vercel.app/wishlist", {
+    fetch("http://localhost:5000/wishlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,10 +30,13 @@ const Blog = ({ blog }) => {
   };
   return (
     <div className="mt-[1rem] mx-[2%]">
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins ">
-        <div className="flex flex-col md:flex-row gap-6">
+      <div className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins relative">
+    <p class="absolute right-2 top-[-10px] text-sm font-semibold bg-[#38BDF8] text-[#F8FAFC] px-3 py-1 rounded-full shadow">
+    ${blog.price}
+  </p>
+        <div className="flex flex-col md:flex-row gap-6 ">
           {/* Image Section */}
-           <div className="w-full  md:w-1/3">
+          <div className="w-full  md:w-1/3">
             <img
               src={blog.imgUrl}
               alt={blog.title}
