@@ -24,7 +24,7 @@ const UndateBlog = () => {
     blog.userEmail = "abulHasan@gmail.com";
     blog.userPhoto = "https://example.com/images/abul-hasan.jpg"; // valid image URL
 
-    fetch(`http://localhost:5000/update/${oldData._id}`, {
+    fetch(`https://abulhasem-blog-server.vercel.app/update/${oldData._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

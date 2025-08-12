@@ -50,14 +50,17 @@ const AddBlogs = () => {
 
     const handleSubmit = async () => {
       try {
-        const response = await fetch("http://localhost:5000/add-blog", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({ blog, email: user.email }),
-        });
+        const response = await fetch(
+          "https://abulhasem-blog-server.vercel.app/add-blog",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ blog, email: user.email }),
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();

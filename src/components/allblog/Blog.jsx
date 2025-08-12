@@ -13,7 +13,7 @@ const Blog = ({ blog }) => {
     const wishListEmail = user.email;
     wishListItem.wishListEmail = wishListEmail;
 
-    fetch("http://localhost:5000/wishlist", {
+    fetch("https://abulhasem-blog-server.vercel.app/wishlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,10 +30,10 @@ const Blog = ({ blog }) => {
   };
   return (
     <div className="mt-[1rem] mx-[2%]">
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins relative">
-    <p class="absolute right-2 top-[-10px] text-sm font-semibold bg-[#38BDF8] text-[#F8FAFC] px-3 py-1 rounded-full shadow">
-    ${blog.price}
-  </p>
+      <div className="bg-white rounded-lg shadow-md p-6 mb-6 font-Poppins relative ">
+        <p class="absolute right-2 top-[-10px] text-sm font-semibold bg-[#38BDF8] text-[#F8FAFC] px-3 py-1 rounded-full shadow">
+          ${blog.price}
+        </p>
         <div className="flex flex-col md:flex-row gap-6 ">
           {/* Image Section */}
           <div className="w-full  md:w-1/3">

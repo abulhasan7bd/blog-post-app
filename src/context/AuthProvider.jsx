@@ -70,7 +70,7 @@ const AuthProvider = ({ children }) => {
         const email = user.email;
 
         // 🔐 Step 1: Create JWT
-        fetch("http://localhost:5000/jwtCreate", {
+        fetch("https://abulhasem-blog-server.vercel.app/jwtCreate", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

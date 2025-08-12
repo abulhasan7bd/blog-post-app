@@ -31,7 +31,7 @@ const AllBlogs = () => {
 
     const query = encodeURIComponent(search || category);
 
-    fetch(`http://localhost:5000/blogs?search=${query}`)
+    fetch(`https://abulhasem-blog-server.vercel.app/blogs?search=${query}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch blogs");
         return res.json();
@@ -114,7 +114,7 @@ const AllBlogs = () => {
           Showcase of all project : {filteredBlogs.length}
         </h2>
 
-        <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-[3rem]">
+        <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-[3rem] justify-center items-center">
           {filteredBlogs.map((item) => (
             <div
               key={item._id}

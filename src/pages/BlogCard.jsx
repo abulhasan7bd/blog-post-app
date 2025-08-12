@@ -11,7 +11,7 @@ const BlogCard = ({ blog }) => {
   const handleWishList = (wishListItem) => {
     const wishListEmail = user.email;
     wishListItem.wishListEmail = wishListEmail;
-    fetch("http://localhost:5000/wishlist", {
+    fetch("https://abulhasem-blog-server.vercel.app/wishlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
