@@ -4,11 +4,9 @@ import { useLoaderData } from "react-router-dom";
 
 const AllBlogs = () => {
   const dataX = useLoaderData();
-  console.log(dataX, "dd");
 
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
-  const [sort, setSort] = useState(""); // Sorting state
   const categories = [
     "All",
     "Health",
@@ -20,7 +18,7 @@ const AllBlogs = () => {
 
   // All blog list
   const [blogList, setBlogList] = useState(dataX);
-  const [filteredBlogs, setFilteredBlogs] = useState(dataX);
+ 
 
   // Fetch blogs from API when search or category changes
   const fetchBlogs = () => {
@@ -49,21 +47,7 @@ const AllBlogs = () => {
     fetchBlogs();
   }, [search, category]);
 
-  console.log(dataX);
-  // Apply sorting & filtering locally
-  useEffect(() => {
-    console.log(sort);
-    let updatedList = [...blogList];
-    console.log(updatedList);
-    // Sort by Price
-    if (sort === "low-to-high") {
-      updatedList.sort((a, b) => a.price - b.price);
-    } else if (sort === "high-to-low") {
-      updatedList.sort((a, b) => b.price - a.price);
-    }
 
-    setFilteredBlogs(updatedList);
-  }, [sort, blogList]);
 
   return (
     <div className="bg-[#F8FAFC] min-h-screen py-8">
@@ -96,26 +80,17 @@ const AllBlogs = () => {
           ))}
         </select>
 
-        {/* Sort */}
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="w-full px-4 py-2 border border-[#38BDF8] bg-white text-black rounded-md outline-none focus:ring-2 focus:ring-[#38BDF8] transition"
-        >
-          <option value="">Sort by Price</option>
-          <option value="low-to-high">Low to High</option>
-          <option value="high-to-low">High to Low</option>
-        </select>
+     
       </div>
 
       {/* Showcase */}
       <div className="flex flex-col items-center gap-4 p-4 mt-6">
         <h2 className="font-Poppins text-[2rem] md:text-[2.3rem] lg:text-[2.5rem] font-[600] text-[#1E293B] w-full text-left pl-[1rem]">
-          Showcase of all project : {filteredBlogs.length}
+          Showcase of all project : {blogList.length}
         </h2>
 
         <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-[3rem] justify-center items-center">
-          {filteredBlogs.map((item) => (
+          {blogList.map((item) => (
             <div
               key={item._id}
               className="bg-white border border-[#38BDF8] shadow-lg hover:shadow-[#38BDF8]/50 
